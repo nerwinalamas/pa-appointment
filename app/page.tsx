@@ -1,5 +1,5 @@
-import SetAppointment from "./(appointment)/set-appointment/page";
+import Appointment from "./appointment/page";
 
 export default function Home() {
-    return <SetAppointment />;
+    return <Appointment />;
 }
