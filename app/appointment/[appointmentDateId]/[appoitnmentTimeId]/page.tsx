@@ -1,14 +1,56 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { reserveSlot } from "./action";
 
 const PaymentInformation = () => {
     const [name, setName] = useState("");
     const [contactNumber, setContactNumber] = useState("");
+    const [depositScreenshot, setDepositScreenshot] = useState<File | null>(
+        null
+    );
     const [paymentMethod, setPaymentMethod] = useState("gcash");
 
-    const handleSubmit = (e: FormEvent) => {
+    const params = useParams();
+    const router = useRouter();
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setDepositScreenshot(e.target.files[0]);
+        }
+    };
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        if (!depositScreenshot) {
+            console.log("Error: No deposit screenshot uploaded");
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("contactNumber", contactNumber);
+            formData.append("depositScreenshot", depositScreenshot);
+
+            const reponse = await reserveSlot(
+                params.appoitnmentTimeId as string,
+                formData
+            );
+
+            if (reponse.success) {
+                router.push(
+                    `/appointment/${params.appointmentDateId}/${params.appoitnmentTimeId}/schedule`
+                );
+                console.log("Slot reserve successfully: ", reponse.data);
+            } else {
+                console.log("Error in payment: ", reponse.message);
+            }
+        } catch (error) {
+            console.log("Error in payment: ", error);
+        }
     };
 
     return (
@@ -79,15 +121,17 @@ const PaymentInformation = () => {
                     </div>
                     <div className="flex flex-col gap-1">
                         <label
-                            htmlFor="depositScreenshots"
+                            htmlFor="depositScreenshot"
                             className="text-sm font-semibold"
                         >
                             Deposit Screenshots:
                         </label>
                         <input
                             type="file"
-                            id="depositScreenshots"
-                            name="depositScreenshots"
+                            id="depositScreenshot"
+                            name="depositScreenshot"
+                            accept="image/*"
+                            onChange={handleFileChange}
                         />
                     </div>
                 </div>
