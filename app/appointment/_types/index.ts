@@ -1,5 +1,5 @@
 export type AppointmentProps = {
-    id: number;
+    id: string;
     date: string;
     available_slots: number;
     booked_slots: number;
