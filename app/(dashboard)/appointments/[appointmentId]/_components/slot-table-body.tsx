@@ -7,6 +7,7 @@ import { useSlotModal } from "@/hooks/useSlotModal";
 import { deleteSlot } from "../action";
 import toast from "react-hot-toast";
 import { ExternalLink } from "lucide-react";
+import { useParams } from "next/navigation";
 
 const SlotTableBody = ({
     slot,
@@ -18,10 +19,11 @@ const SlotTableBody = ({
     formattedEndTime: string;
 }) => {
     const { onOpen } = useSlotModal();
+    const { appointmentId } = useParams();
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (appointmentId: string, slotId: string) => {
         try {
-            const response = await deleteSlot(id);
+            const response = await deleteSlot(appointmentId, slotId);
             if (response.success) {
                 toast.success("Delete appointment successfull");
             }
@@ -58,7 +60,13 @@ const SlotTableBody = ({
                 <Button onClick={() => onOpen("updateSlot", slot)}>
                     Update
                 </Button>
-                <Button onClick={() => handleDelete(slot.id)}>Delete</Button>
+                <Button
+                    onClick={() =>
+                        handleDelete(appointmentId as string, slot.id)
+                    }
+                >
+                    Delete
+                </Button>
             </TableCell>
         </TableRow>
     );
