@@ -6,7 +6,8 @@ export const getAllSlots = async (dateId: string) => {
     const { data, error } = await supabase
         .from("slots")
         .select("*")
-        .eq("appointment_id", dateId);
+        .eq("appointment_id", dateId)
+        .order("start_time", { ascending: true });
 
     if (error) {
         return { success: false, error: error.message };
