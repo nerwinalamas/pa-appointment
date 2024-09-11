@@ -3,8 +3,37 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
+export const checkDateIfExists = async (date: string) => {
+    const supabase = await createClient();
+
+    const { data: existingAppointment, error: checkError } = await supabase
+        .from("appointments")
+        .select("*")
+        .eq("date", date)
+        .single();
+
+    if (checkError && checkError.code !== "PGRST116") {
+        return { exists: true, error: checkError.message };
+    }
+
+    if (existingAppointment) {
+        return {
+            exists: true,
+            error: "An appointment for this date already exists",
+        };
+    }
+
+    return { exists: false };
+};
+
 export const createAppointment = async (formData: FormData) => {
     const date = formData.get("date") as string;
+
+    const existenceCheck = await checkDateIfExists(date);
+    
+    if (existenceCheck.exists) {
+        return { success: false, error: existenceCheck.error };
+    }
 
     const supabase = await createClient();
     const { data, error } = await supabase.from("appointments").insert({
@@ -21,6 +50,12 @@ export const createAppointment = async (formData: FormData) => {
 
 export const updateAppointment = async (id: string, formData: FormData) => {
     const date = formData.get("date") as string;
+
+    const existenceCheck = await checkDateIfExists(date);
+    
+    if (existenceCheck.exists) {
+        return { success: false, error: existenceCheck.error };
+    }
 
     const supabase = await createClient();
     const { data, error } = await supabase
