@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { format, parseISO } from "date-fns";
+import { format, isBefore, parseISO } from "date-fns";
 import { Label } from "../ui/label";
 import toast from "react-hot-toast";
 import { updateAppointment } from "@/app/(dashboard)/appointments/action";
@@ -43,6 +43,8 @@ const UpdateAppointment = () => {
             if (response.success) {
                 toast.success("Update appointment successfully!");
                 onClose();
+            } else {
+                toast.error(`${response.error}`);
             }
         } catch (error) {
             console.log("Error updating appointment: ", error);
@@ -87,6 +89,23 @@ const UpdateAppointment = () => {
                                 selected={date}
                                 onSelect={setDate}
                                 initialFocus
+                                disabled={(dateToDisable) => {
+                                    const currentDate = new Date();
+
+                                    const formattedCurrentDate = format(
+                                        currentDate,
+                                        "MM-dd-yyyy"
+                                    );
+                                    const formattedDate = format(
+                                        dateToDisable,
+                                        "MM-dd-yyyy"
+                                    );
+
+                                    return isBefore(
+                                        new Date(formattedDate),
+                                        new Date(formattedCurrentDate)
+                                    );
+                                }}
                             />
                         </PopoverContent>
                     </Popover>
