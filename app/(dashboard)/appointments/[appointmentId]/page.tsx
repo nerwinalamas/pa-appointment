@@ -1,8 +1,8 @@
 import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
-import { getAllSlots } from "@/app/appointment/[appointmentDateId]/service";
 import {
     Table,
     TableBody,
+    TableCell,
     TableHead,
     TableHeader,
     TableRow,
@@ -10,13 +10,14 @@ import {
 import SlotButton from "./_components/slot-button";
 import SlotTableBody from "./_components/slot-table-body";
 import BackButton from "@/components/shared/back-button";
+import { getAllSlotsDashboard } from "./service";
 
 const AppointmentId = async ({
     params,
 }: {
     params: { appointmentId: string };
 }) => {
-    const { data, error } = await getAllSlots(params.appointmentId);
+    const { data, error } = await getAllSlotsDashboard(params.appointmentId);
 
     if (error) {
         return <h1>Error slots dashboard</h1>;
@@ -43,19 +44,32 @@ const AppointmentId = async ({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((slot) => {
-                        const formattedStartTime = formatTime(slot.start_time);
-                        const formattedEndTime = formatTime(slot.end_time);
+                    {data?.length === 0 ? (
+                        <TableRow>
+                            <TableCell
+                                colSpan={7}
+                                className="text-center text-gray-500"
+                            >
+                                No Slots Available
+                            </TableCell>
+                        </TableRow>
+                    ) : (
+                        data?.map((slot) => {
+                            const formattedStartTime = formatTime(
+                                slot.start_time
+                            );
+                            const formattedEndTime = formatTime(slot.end_time);
 
-                        return (
-                            <SlotTableBody
-                                key={slot.id}
-                                slot={slot}
-                                formattedStartTime={formattedStartTime}
-                                formattedEndTime={formattedEndTime}
-                            />
-                        );
-                    })}
+                            return (
+                                <SlotTableBody
+                                    key={slot.id}
+                                    slot={slot}
+                                    formattedStartTime={formattedStartTime}
+                                    formattedEndTime={formattedEndTime}
+                                />
+                            );
+                        })
+                    )}
                 </TableBody>
             </Table>
         </div>
