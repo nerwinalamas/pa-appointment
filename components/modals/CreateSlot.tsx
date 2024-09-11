@@ -20,6 +20,8 @@ const CreateSlot = () => {
     const [endTime, setEndTime] = useState("");
 
     const handleDialogChange = () => {
+        setStartTime("");
+        setEndTime("");
         onClose();
     };
 
@@ -39,6 +41,8 @@ const CreateSlot = () => {
                 setStartTime("");
                 setEndTime("");
                 onClose();
+            } else {
+                toast.error(`${response.error}`);
             }
         } catch (error) {
             console.log("Error creating slot: ", error);
