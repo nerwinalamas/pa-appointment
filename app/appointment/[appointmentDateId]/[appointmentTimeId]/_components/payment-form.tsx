@@ -40,6 +40,7 @@ const PaymentForm = ({
             formData.append("depositScreenshot", depositScreenshot);
 
             const reponse = await reserveSlot(
+                appointmentDateId as string,
                 appointmentTimeId as string,
                 formData
             );
@@ -63,12 +64,10 @@ const PaymentForm = ({
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:w-96">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
                 <h3 className="text-base font-semibold">Payment Information</h3>
-                <div className="flex flex-col gap-1">
-                    <label htmlFor="name" className="text-sm font-semibold">
-                        Name
-                    </label>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="name">Name</label>
                     <input
                         type="text"
                         id="name"
@@ -76,16 +75,11 @@ const PaymentForm = ({
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="p-3 rounded-md text-slate-800"
+                        className="p-3 rounded-md text-slate-800 outline-none"
                     />
                 </div>
-                <div className="flex flex-col gap-1">
-                    <label
-                        htmlFor="contactNumber"
-                        className="text-sm font-semibold"
-                    >
-                        Contact Number
-                    </label>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="contactNumber">Contact Number</label>
                     <input
                         type="text"
                         id="contactNumber"
@@ -93,14 +87,11 @@ const PaymentForm = ({
                         placeholder="Contact Number"
                         value={contactNumber}
                         onChange={(e) => setContactNumber(e.target.value)}
-                        className="p-3 rounded-md text-slate-800"
+                        className="p-3 rounded-md text-slate-800 outline-none"
                     />
                 </div>
-                <div className="flex flex-col gap-1">
-                    <label
-                        htmlFor="depositScreenshot"
-                        className="text-sm font-semibold"
-                    >
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="depositScreenshot">
                         Deposit Screenshots
                     </label>
                     <input
@@ -114,14 +105,14 @@ const PaymentForm = ({
             </div>
             <button
                 type="submit"
-                className="w-full p-3 rounded-md font-semibold bg-slate-100 text-slate-800"
+                className="w-full p-3 rounded-md font-semibold bg-slate-100 text-slate-800 hover:bg-opacity-80"
             >
                 Submit
             </button>
             <button
                 type="button"
                 onClick={handleCancel}
-                className="w-full p-3 rounded-md font-semibold bg-slate-100 text-slate-800"
+                className="w-full p-3 rounded-md font-semibold text-slate-100 hover:bg-slate-900"
             >
                 Cancel
             </button>
