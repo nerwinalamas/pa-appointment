@@ -18,6 +18,10 @@ const Appointments = async () => {
         return <h1>Error appointment dashboard</h1>;
     }
 
+    const filteredData = data.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
     return (
         <div className="w-[60%] flex flex-col items-end gap-2">
             <AppointmentButton />
@@ -31,11 +35,14 @@ const Appointments = async () => {
                         <TableHead className="text-center">
                             Booked slots
                         </TableHead>
+                        <TableHead className="text-center">
+                            Total slots
+                        </TableHead>
                         <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((appointment) => {
+                    {filteredData?.map((appointment) => {
                         const { dayName, formattedDate } = formatDate(
                             appointment.date
                         );
