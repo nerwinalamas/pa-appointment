@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import SlotButton from "./_components/slot-button";
 import SlotTableBody from "./_components/slot-table-body";
+import BackButton from "@/components/shared/back-button";
 
 const AppointmentId = async ({
     params,
@@ -23,6 +24,7 @@ const AppointmentId = async ({
 
     return (
         <div className="w-[60%] flex flex-col items-end gap-2">
+            <BackButton />
             <SlotButton appointmentId={params.appointmentId} />
             <Table>
                 <TableHeader>
@@ -33,7 +35,9 @@ const AppointmentId = async ({
                         <TableHead className="text-center">End time</TableHead>
                         <TableHead className="text-center">Status</TableHead>
                         <TableHead className="text-center">Name</TableHead>
-                        <TableHead className="text-center">Contact Number</TableHead>
+                        <TableHead className="text-center">
+                            Contact Number
+                        </TableHead>
                         <TableHead className="text-center">Deposit</TableHead>
                         <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
