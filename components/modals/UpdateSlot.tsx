@@ -21,6 +21,10 @@ const UpdateSlot = () => {
     const [endTime, setEndTime] = useState("");
 
     const handleDialogChange = () => {
+        if (data && typeof data === "object") {
+            setStartTime(formatTime(data.start_time));
+            setEndTime(formatTime(data.end_time));
+        }
         onClose();
     };
 
@@ -34,10 +38,16 @@ const UpdateSlot = () => {
             formData.append("startTime", startTime);
             formData.append("endTime", endTime);
 
-            const response = await updateSlot(data.id, formData);
+            const response = await updateSlot(
+                data.id,
+                data.appointment_id,
+                formData
+            );
             if (response.success) {
                 toast.success("Update slot successfully");
                 onClose();
+            } else {
+                toast.error(`${response.error}`);
             }
         } catch (error) {
             console.log("Error creating slot: ", error);
