@@ -41,6 +41,9 @@ const AppointmentTableBody = ({
             <TableCell className="text-center">
                 {appointment.booked_slots}
             </TableCell>
+            <TableCell className="text-center">
+                {appointment.available_slots + appointment.booked_slots}
+            </TableCell>
             <TableCell className="flex items-center justify-center gap-2">
                 <Link href={`/appointments/${appointment.id}`}>
                     <Button>Read</Button>
