@@ -41,6 +41,7 @@ const CreateAppointment = () => {
             const response = await createAppointment(formData);
             if (response.success) {
                 toast.success("Create appointment successfully!");
+                setDate(undefined);
                 onClose();
             } else {
                 toast.error(`${response.error}`);
