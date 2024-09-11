@@ -26,6 +26,8 @@ const SlotTableBody = ({
             const response = await deleteSlot(appointmentId, slotId);
             if (response.success) {
                 toast.success("Delete appointment successfull");
+            } else {
+                toast.error(`${response.error}`);
             }
         } catch (error) {
             console.log("Error deleting appointment");
