@@ -1,10 +1,9 @@
-import { createClient } from "@/utils/supabase/server";
 import AppointmentList from "./_components/appointment-list";
 import { AppointmentProps } from "./_types";
+import { getAppointmentsWithSlotCount } from "./service";
 
 const Appointment = async () => {
-    const supabase = await createClient();
-    const { data, error } = await supabase.from("appointments").select("*");
+    const { data, error } = await getAppointmentsWithSlotCount();
 
     if (error) {
         return <div>Error par</div>;
