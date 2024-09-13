@@ -13,6 +13,7 @@ import AppointmentTableBody from "./_components/appointment-table-body";
 import AppointmentPagination from "./_components/appointment-pagination";
 import { getAllAppointmentsDashboard } from "./service";
 import { Suspense } from "react";
+import AppointmentDownload from "./_components/appointment-download";
 
 const Appointments = async ({
     searchParams,
@@ -20,7 +21,7 @@ const Appointments = async ({
     searchParams: { page: string };
 }) => {
     const page = parseInt(searchParams.page) || 1;
-    const pageSize = 10;
+    const pageSize = 8;
 
     const { data, error, count } = await getAllAppointmentsDashboard(
         page,
@@ -34,12 +35,15 @@ const Appointments = async ({
     const totalPages = Math.ceil(count! / pageSize);
 
     return (
-        <div className="w-[60%] flex flex-col items-end gap-2">
-            <AppointmentButton />
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Date</TableHead>
+        <div className="flex flex-col items-end gap-2 mt-5 mb-20 lg:gap-0 lg:w-[90%] lg:mx-auto xl:w-[65%]">
+            <div className="w-full p-4 flex justify-end items-center gap-2">
+                <AppointmentButton />
+                <AppointmentDownload />
+            </div>
+            <Table className="grid gap-3 p-4 lg:gap-0">
+                <TableHeader className="hidden lg:grid">
+                    <TableRow className="lg:grid lg:grid-cols-7">
+                        <TableHead className="lg:col-span-2">Date</TableHead>
                         <TableHead className="text-center">
                             Available slots
                         </TableHead>
@@ -49,10 +53,12 @@ const Appointments = async ({
                         <TableHead className="text-center">
                             Total slots
                         </TableHead>
-                        <TableHead className="text-center">Actions</TableHead>
+                        <TableHead className="text-center lg:col-span-2">
+                            Actions
+                        </TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className="grid gap-3 md:grid-cols-2 lg:grid-cols-1 lg:gap-0">
                     {data?.length === 0 ? (
                         <TableRow>
                             <TableCell
@@ -78,12 +84,12 @@ const Appointments = async ({
                         })
                     )}
                 </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TableCell colSpan={4}>
+                <TableFooter className="grid">
+                    <TableRow className="grid grid-cols-2 lg:grid-cols-7">
+                        <TableCell colSpan={4} className="lg:col-span-5">
                             Page {page} of {totalPages}
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right lg:col-span-2">
                             {count} rows
                         </TableCell>
                     </TableRow>
