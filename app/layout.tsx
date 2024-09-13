@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ModalProvider from "@/providers/ModalProvider";
 import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/shared/navbar";
 
 export const metadata: Metadata = {
     title: "pa-Appointment",
@@ -16,6 +17,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+                <Navbar />
                 <ModalProvider />
                 <Toaster />
                 {children}
