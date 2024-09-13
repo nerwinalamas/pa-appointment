@@ -20,6 +20,7 @@ import { format, isBefore, parseISO } from "date-fns";
 import { Label } from "../ui/label";
 import toast from "react-hot-toast";
 import { updateAppointment } from "@/app/(dashboard)/appointments/action";
+import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
 
 const UpdateAppointment = () => {
     const { isOpen, onClose, type, data } = useAppointmentModal();
@@ -27,6 +28,10 @@ const UpdateAppointment = () => {
     const [date, setDate] = useState<Date | undefined>(new Date());
 
     const handleDialogChange = () => {
+        if (data && data.date) {
+            const parsedDate = parseISO(data.date);
+            setDate(parsedDate);
+        }
         onClose();
     };
 
@@ -34,6 +39,17 @@ const UpdateAppointment = () => {
         e.preventDefault();
 
         if (!data) return;
+
+        const formData = {
+            date,
+        };
+
+        const result = appointmentSchema.safeParse(formData);
+
+        if (!result.success) {
+            toast.error("Invalid data. Please check your input.");
+            return;
+        }
 
         try {
             const formData = new FormData();

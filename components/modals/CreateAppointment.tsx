@@ -20,6 +20,7 @@ import { Label } from "../ui/label";
 import { createAppointment } from "@/app/(dashboard)/appointments/action";
 import toast from "react-hot-toast";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
+import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
 
 const CreateAppointment = () => {
     const { isOpen, onClose, type } = useAppointmentModal();
@@ -28,11 +29,23 @@ const CreateAppointment = () => {
     const [date, setDate] = useState<Date | undefined>(new Date());
 
     const handleDialogChange = () => {
+        setDate(new Date());
         onClose();
     };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        const formData = {
+            date,
+        };
+
+        const result = appointmentSchema.safeParse(formData);
+
+        if (!result.success) {
+            toast.error("Invalid data. Please check your input.");
+            return;
+        }
 
         try {
             const formData = new FormData();

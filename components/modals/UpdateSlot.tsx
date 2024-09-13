@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import { useSlotModal } from "@/hooks/useSlotModal";
 import { updateSlot } from "@/app/(dashboard)/appointments/[appointmentId]/action";
 import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
+import { slotSchema } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/schema";
+import { ErrorState } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/type";
 
 const UpdateSlot = () => {
     const { isOpen, onClose, type, data } = useSlotModal();
@@ -19,17 +21,46 @@ const UpdateSlot = () => {
 
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [error, setError] = useState<ErrorState>({});
 
     const handleDialogChange = () => {
         if (data && typeof data === "object") {
             setStartTime(formatTime(data.start_time));
             setEndTime(formatTime(data.end_time));
         }
+        setError({});
         onClose();
     };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        setError({});
+
+        const result = slotSchema.safeParse({ startTime, endTime });
+
+        if (!result.success) {
+            const formattedErrors = result.error.flatten().fieldErrors;
+            type ErrorKeys = keyof typeof formattedErrors;
+            setError(
+                Object.keys(formattedErrors).reduce((acc, key) => {
+                    const typedKey = key as ErrorKeys;
+                    acc[typedKey] = formattedErrors[typedKey]?.[0] || "";
+                    return acc;
+                }, {} as ErrorState)
+            );
+            return;
+        }
+
+        const start = new Date(`1970-01-01T${startTime}:00`);
+        const end = new Date(`1970-01-01T${endTime}:00`);
+
+        if (end <= start) {
+            setError({
+                endTime: "End time must be after start time",
+            });
+            return;
+        }
 
         if (!data || typeof data !== "object") return;
 
@@ -68,24 +99,32 @@ const UpdateSlot = () => {
                     <DialogTitle>Update Slot</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                    <Label htmlFor="start_time">Start Time</Label>
+                    <Label htmlFor="startTime">Start Time</Label>
                     <input
                         type="time"
-                        id="start_time"
-                        name="start_time"
+                        id="startTime"
+                        name="startTime"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
                         className="p-2 rounded-md font-medium text-slate-800"
                     />
-                    <Label htmlFor="end_time">End Time</Label>
+                    {error.startTime && (
+                        <p className="text-sm text-red-500">
+                            {error.startTime}
+                        </p>
+                    )}
+                    <Label htmlFor="endTime">End Time</Label>
                     <input
                         type="time"
-                        id="end_time"
-                        name="end_time"
+                        id="endTime"
+                        name="endTime"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
                         className="p-2 rounded-md font-medium text-slate-800"
                     />
+                    {error.endTime && (
+                        <p className="text-sm text-red-500">{error.endTime}</p>
+                    )}
                     <DialogFooter className="mt-6">
                         <Button
                             type="button"
