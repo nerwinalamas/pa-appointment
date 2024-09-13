@@ -31,22 +31,22 @@ const AppointmentTableBody = ({
     };
 
     return (
-        <TableRow>
-            <TableCell>
+        <TableRow className="grid lg:grid-cols-7">
+            <TableCell className="lg:col-span-2">
                 {formattedDate} - {dayName}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="lg:text-center">
                 {appointment.available_slots}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="lg:text-center">
                 {appointment.booked_slots}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="lg:text-center">
                 {appointment.available_slots + appointment.booked_slots}
             </TableCell>
-            <TableCell className="flex items-center justify-center gap-2">
+            <TableCell className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-center lg:col-span-2">
                 <Link href={`/appointments/${appointment.id}`}>
-                    <Button>Read</Button>
+                    <Button className="w-full">Read</Button>
                 </Link>
                 <Button
                     onClick={() => onOpen("updateAppointment", appointment)}
