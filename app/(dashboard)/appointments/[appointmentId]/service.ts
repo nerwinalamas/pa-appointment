@@ -3,9 +3,9 @@ import { createClient } from "@/utils/supabase/server";
 export const getAllSlotsDashboard = async (dateId: string) => {
     const supabase = await createClient();
 
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
         .from("slots")
-        .select("*")
+        .select("*", { count: "exact" })
         .eq("appointment_id", dateId)
         .order("start_time", { ascending: true });
 
@@ -13,5 +13,5 @@ export const getAllSlotsDashboard = async (dateId: string) => {
         return { success: false, error: error.message };
     }
 
-    return { success: true, data };
+    return { success: true, data, count };
 };
