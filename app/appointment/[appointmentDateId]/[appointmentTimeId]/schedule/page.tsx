@@ -18,32 +18,32 @@ const Schedule = async ({
     const formattedEndTime = formatTime(slot.end_time);
 
     return (
-        <div className="h-screen flex flex-col items-center justify-center gap-2">
-            <div className="p-4 text-sm rounded-lg bg-slate-200 text-slate-800">
-                <h1 className="text-xl font-semibold uppercase mb-2">
+        <div className="min-h-screen flex flex-col items-center justify-center gap-2">
+            <div className="p-4 text-base rounded-lg bg-slate-200 text-slate-900">
+                <h1 className="text-2xl font-semibold uppercase mb-2">
                     Appointment Schedule
                 </h1>
                 <p>
                     Date:{" "}
-                    <span className="font-semibold">
+                    <span className="font-bold">
                         {formattedDate} ({dayName})
                     </span>
                 </p>
                 <p>
                     Time:{" "}
-                    <span className="font-semibold">
+                    <span className="font-bold">
                         {formattedStartTime} - {formattedEndTime}
                     </span>
                 </p>
                 <p>
-                    Name: <span className="font-semibold">{slot.name}</span>
+                    Name: <span className="font-bold">{slot.name}</span>
                 </p>
                 <p>
                     Contact number:{" "}
-                    <span className="font-semibold">{slot.contact_number}</span>
+                    <span className="font-bold">{slot.contact_number}</span>
                 </p>
                 <p>
-                    Deposit: <span className="font-semibold">P10.00</span>
+                    Deposit: <span className="font-bold">P10.00</span>
                 </p>
                 <p className="flex gap-2">
                     Payment Screenshot:
