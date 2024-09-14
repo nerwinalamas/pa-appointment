@@ -15,10 +15,10 @@ const PaymentHeading = async ({
     const formattedEndTime = formatTime(slot.end_time);
 
     return (
-        <h1 className="mb-5 text-2xl text-center md:w-[70%] md:mb-7 lg:w-[60%]">
+        <h1 className="mb-5 text-2xl text-center md:w-[70%] md:mb-7 lg:w-[80%] xl:w-[60%]">
             To reserve your slot on{" "}
-            <span className="font-semibold">{formattedDate}</span>, from{" "}
-            <span className="font-semibold">
+            <span className="font-semibold lg:font-bold">{formattedDate}</span>, from{" "}
+            <span className="font-semibold lg:font-bold">
                 {formattedStartTime} to {formattedEndTime} ({dayName})
             </span>
             , kindly pay the required deposit.
