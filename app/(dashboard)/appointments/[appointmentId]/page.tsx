@@ -53,7 +53,7 @@ const AppointmentId = async ({
                         <TableRow>
                             <TableCell
                                 colSpan={7}
-                                className="text-center text-gray-500"
+                                className="text-center"
                             >
                                 No Slots Available
                             </TableCell>
