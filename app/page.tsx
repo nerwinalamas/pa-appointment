@@ -1,5 +1,5 @@
-import Appointment from "./appointment/page";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-    return <Appointment />;
+    redirect("/appointment");
 }
