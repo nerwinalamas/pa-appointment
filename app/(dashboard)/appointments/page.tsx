@@ -11,9 +11,10 @@ import {
 import AppointmentButton from "./_components/appointment-button";
 import AppointmentTableBody from "./_components/appointment-table-body";
 import AppointmentPagination from "./_components/appointment-pagination";
-import { getAllAppointmentsDashboard } from "./service";
+import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
 import { Suspense } from "react";
 import AppointmentDownload from "./_components/appointment-download";
+import { redirect } from "next/navigation";
 
 const Appointments = async ({
     searchParams,
@@ -33,6 +34,12 @@ const Appointments = async ({
     }
 
     const totalPages = Math.ceil(count! / pageSize);
+
+    const { session } = await isLoggedIn();
+
+    if (!session) {
+        redirect("/login");
+    }
 
     return (
         <div className="flex flex-col items-end gap-2 mt-5 mb-20 lg:gap-0 lg:w-[90%] lg:mx-auto xl:w-[65%]">
@@ -61,10 +68,7 @@ const Appointments = async ({
                 <TableBody className="grid gap-3 md:grid-cols-2 lg:grid-cols-1 lg:gap-0">
                     {data?.length === 0 ? (
                         <TableRow>
-                            <TableCell
-                                colSpan={5}
-                                className="text-center text-gray-500"
-                            >
+                            <TableCell colSpan={5} className="text-center">
                                 No Appointment Dates Available
                             </TableCell>
                         </TableRow>
