@@ -9,18 +9,20 @@ const PaymentInformation = ({
     params: { appointmentDateId: string; appointmentTimeId: string };
 }) => {
     return (
-        <div className="max-w-screen-xl min-h-screen mx-auto flex flex-col items-center justify-center gap-2 p-4">
+        <div className="mx-auto p-4 lg:w-[80%]">
             <BackButton />
-            <PaymentHeading
-                dateId={params.appointmentDateId}
-                timeId={params.appointmentTimeId}
-            />
-            <div className="flex flex-col gap-2 lg:flex-row lg:gap-5">
-                <PaymentMethod />
-                <PaymentForm
-                    appointmentDateId={params.appointmentDateId}
-                    appointmentTimeId={params.appointmentTimeId}
+            <div className="h-full mt-5 flex flex-col items-center justify-center gap-2">
+                <PaymentHeading
+                    dateId={params.appointmentDateId}
+                    timeId={params.appointmentTimeId}
                 />
+                <div className="w-full flex flex-col items-center gap-2 lg:flex-row lg:items-start lg:justify-center lg:gap-5">
+                    <PaymentMethod />
+                    <PaymentForm
+                        appointmentDateId={params.appointmentDateId}
+                        appointmentTimeId={params.appointmentTimeId}
+                    />
+                </div>
             </div>
         </div>
     );
