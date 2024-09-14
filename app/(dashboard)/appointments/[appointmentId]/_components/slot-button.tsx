@@ -7,7 +7,10 @@ const SlotButton = ({ appointmentId }: { appointmentId: string }) => {
     const { onOpen } = useSlotModal();
 
     return (
-        <Button onClick={() => onOpen("createSlot", appointmentId as string)}>
+        <Button
+            variant="secondary"
+            onClick={() => onOpen("createSlot", appointmentId as string)}
+        >
             Create Slot
         </Button>
     );
