@@ -18,3 +18,13 @@ export const getAllAppointmentsDashboard = async (page = 1, pageSize = 10) => {
 
     return { success: true, data, count, page, pageSize };
 };
+
+export const isLoggedIn = async () => {
+    const supabase = createClient();
+
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
+
+    return { session };
+};
