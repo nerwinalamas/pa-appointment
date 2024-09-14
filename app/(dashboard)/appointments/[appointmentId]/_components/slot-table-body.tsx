@@ -36,12 +36,16 @@ const SlotTableBody = ({
 
     return (
         <TableRow className="grid lg:grid-cols-10">
-            <TableCell className="lg:text-center">{formattedStartTime}</TableCell>
+            <TableCell className="lg:text-center">
+                {formattedStartTime}
+            </TableCell>
             <TableCell className="lg:text-center">{formattedEndTime}</TableCell>
             <TableCell className="lg:text-center">
                 {slot.is_booked ? "Booked" : "Available"}
             </TableCell>
-            <TableCell className="lg:text-center lg:col-span-2">{slot.name || "-"}</TableCell>
+            <TableCell className="lg:text-center lg:col-span-2">
+                {slot.name || "-"}
+            </TableCell>
             <TableCell className="lg:text-center lg:col-span-2 ">
                 {slot.contact_number || "-"}
             </TableCell>
@@ -59,10 +63,14 @@ const SlotTableBody = ({
                 )}
             </TableCell>
             <TableCell className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-center lg:col-span-2">
-                <Button onClick={() => onOpen("updateSlot", slot)}>
+                <Button
+                    variant="secondary"
+                    onClick={() => onOpen("updateSlot", slot)}
+                >
                     Update
                 </Button>
                 <Button
+                    variant="secondary"
                     onClick={() =>
                         handleDelete(appointmentId as string, slot.id)
                     }

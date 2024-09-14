@@ -46,14 +46,20 @@ const AppointmentTableBody = ({
             </TableCell>
             <TableCell className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-center lg:col-span-2">
                 <Link href={`/appointments/${appointment.id}`}>
-                    <Button className="w-full">Read</Button>
+                    <Button variant="secondary" className="w-full">
+                        Read
+                    </Button>
                 </Link>
                 <Button
+                    variant="secondary"
                     onClick={() => onOpen("updateAppointment", appointment)}
                 >
                     Update
                 </Button>
-                <Button onClick={() => handleDelete(appointment.id)}>
+                <Button
+                    variant="secondary"
+                    onClick={() => handleDelete(appointment.id)}
+                >
                     Delete
                 </Button>
             </TableCell>

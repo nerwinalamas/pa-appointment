@@ -20,7 +20,11 @@ const AppointmentDownload = () => {
         }
     };
 
-    return <Button onClick={handleDownload}>Download</Button>;
+    return (
+        <Button variant="secondary" onClick={handleDownload}>
+            Download
+        </Button>
+    );
 };
 
 export default AppointmentDownload;

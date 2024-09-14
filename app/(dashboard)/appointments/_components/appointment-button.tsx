@@ -6,7 +6,7 @@ import { useAppointmentModal } from "@/hooks/useAppointmentModal";
 const AppointmentButton = () => {
     const { onOpen } = useAppointmentModal();
     
-    return <Button onClick={() => onOpen("createAppointment")}>Create</Button>;
+    return <Button variant="secondary" onClick={() => onOpen("createAppointment")}>Create</Button>;
 };
 
 export default AppointmentButton;
