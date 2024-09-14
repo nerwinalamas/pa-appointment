@@ -14,7 +14,7 @@ const TimeCard = ({
 
     if (is_booked) {
         return (
-            <div className="flex items-center justify-center h-40 p-4 rounded-lg cursor-not-allowed bg-red-400 text-slate-800">
+            <div className="flex items-center justify-center h-40 p-4 rounded-lg cursor-not-allowed bg-red-400">
                 <div className="text-xl font-bold">
                     {formattedStartTime} - {formattedEndTime}
                 </div>
@@ -25,7 +25,7 @@ const TimeCard = ({
     return (
         <Link
             href={`/appointment/${appointmentDateId}/${id}`}
-            className="flex items-center justify-center h-40 p-4 rounded-lg bg-green-400 text-slate-800"
+            className="flex items-center justify-center h-40 p-4 rounded-lg bg-green-400"
         >
             <div className="text-xl font-bold">
                 {formattedStartTime} - {formattedEndTime}

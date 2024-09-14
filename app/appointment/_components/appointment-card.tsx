@@ -6,13 +6,13 @@ const AppointmentCard = async ({
     id,
     date,
     available_slots,
-    slotCount
+    slotCount,
 }: AppointmentProps) => {
     const { dayName, formattedDate } = formatDate(date);
 
     if (slotCount === 0 && available_slots === 0) {
         return (
-            <div className="flex flex-col justify-between h-40 p-4 rounded-lg cursor-not-allowed bg-gray-400 text-slate-800">
+            <div className="flex flex-col justify-between h-40 p-4 rounded-lg cursor-not-allowed bg-gray-400">
                 <div className="flex flex-col gap-1">
                     <h1 className="text-xl font-medium uppercase">{dayName}</h1>
                     <h2 className="text-sm font-semibold">{formattedDate}</h2>
@@ -24,7 +24,7 @@ const AppointmentCard = async ({
 
     if (slotCount !== 0 && available_slots === 0) {
         return (
-            <div className="flex flex-col justify-between h-40 p-4 rounded-lg cursor-not-allowed bg-red-400 text-slate-800">
+            <div className="flex flex-col justify-between h-40 p-4 rounded-lg cursor-not-allowed bg-red-400">
                 <div className="flex flex-col gap-1">
                     <h1 className="text-xl font-medium uppercase">{dayName}</h1>
                     <h2 className="text-sm font-semibold">{formattedDate}</h2>
@@ -41,7 +41,7 @@ const AppointmentCard = async ({
                 slotCount === available_slots && slotCount !== 0
                     ? "bg-green-400"
                     : "bg-yellow-400"
-            } text-slate-800`}
+            }`}
         >
             <div className="flex flex-col gap-1">
                 <h1 className="text-xl font-medium uppercase">{dayName}</h1>
