@@ -133,9 +133,7 @@ const UpdateAppointment = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" variant="secondary">
-                            Save
-                        </Button>
+                        <Button type="submit">Save</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

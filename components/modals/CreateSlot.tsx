@@ -97,7 +97,7 @@ const CreateSlot = () => {
                             setStartTime(e.target.value);
                             setError((prev) => ({ ...prev, startTime: "" }));
                         }}
-                        className="p-2 rounded-md font-medium text-slate-800"
+                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
                     />
                     {error.startTime && (
                         <p className="text-sm text-red-500">
@@ -114,7 +114,7 @@ const CreateSlot = () => {
                             setEndTime(e.target.value);
                             setError((prev) => ({ ...prev, endTime: "" }));
                         }}
-                        className="p-2 rounded-md font-medium text-slate-800"
+                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
                     />
                     {error.endTime && (
                         <p className="text-sm text-red-500">{error.endTime}</p>
@@ -127,9 +127,7 @@ const CreateSlot = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" variant="secondary">
-                            Create
-                        </Button>
+                        <Button type="submit">Create</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

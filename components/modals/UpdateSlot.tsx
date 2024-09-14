@@ -133,7 +133,7 @@ const UpdateSlot = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" variant="secondary">
+                        <Button type="submit">
                             Save
                         </Button>
                     </DialogFooter>

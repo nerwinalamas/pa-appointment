@@ -123,9 +123,7 @@ const CreateAppointment = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" variant="secondary">
-                            Create
-                        </Button>
+                        <Button type="submit">Create</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
