@@ -6,17 +6,17 @@ const PaymentMethod = () => {
     const [paymentMethod, setPaymentMethod] = useState("gcash");
 
     return (
-        <div className="flex flex-col gap-1 md:w-96">
-            <div className="flex flex-col gap-1 p-5 text-sm rounded-md text-slate-800 bg-slate-300">
+        <div className="w-full flex flex-col gap-1 md:w-96">
+            <div className="flex flex-col gap-1 p-5 text-sm rounded-md text-slate-800 bg-slate-200">
                 <p>
-                    Name: <span className="font-semibold">John Doe</span>
+                    Name: <span className="font-bold">John Doe</span>
                 </p>
                 <p>
                     Contact Number:{" "}
-                    <span className="font-semibold">09123456789</span>
+                    <span className="font-bold">09123456789</span>
                 </p>
                 <p>
-                    Amount: <span className="font-semibold">P10</span>
+                    Amount: <span className="font-bold">P10</span>
                 </p>
             </div>
             <div className="flex flex-col gap-1">
