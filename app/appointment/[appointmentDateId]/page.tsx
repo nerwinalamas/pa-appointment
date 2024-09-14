@@ -14,9 +14,9 @@ const SelectTime = async ({
     }
 
     return (
-        <div>
+        <div className="mx-auto p-4 lg:w-[80%]">
             <BackButton />
-            <div className="max-w-screen-xl mx-auto p-4 grid grid-cols-2 gap-4 md:grid-cols-3 lg:w-[80%] xl:grid-cols-6">
+            <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
                 {data?.map((time) => (
                     <TimeCard
                         key={time.id}
