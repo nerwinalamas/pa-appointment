@@ -5,6 +5,9 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { reserveSlot } from "../action";
 import { userSchema } from "../_lib/schema";
 import { ErrorMessage } from "../_lib/type";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const PaymentForm = ({
     appointmentDateId,
@@ -86,12 +89,12 @@ const PaymentForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:w-96">
-            <div className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:w-96">
+            <div className="flex flex-col gap-3">
                 <h3 className="text-base font-semibold">Payment Information</h3>
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="name">Name</label>
-                    <input
+                    <Label htmlFor="name">Name</Label>
+                    <Input
                         type="text"
                         id="name"
                         name="name"
@@ -101,15 +104,18 @@ const PaymentForm = ({
                             setName(e.target.value);
                             setError((prev) => ({ ...prev, name: "" }));
                         }}
-                        className="p-3 rounded-md text-slate-800 outline-none"
+                        className={`${
+                            error.name &&
+                            "outline-double outline-2 outline-red-500"
+                        }`}
                     />
                 </div>
                 {error.name && (
                     <p className="text-sm text-red-500">{error.name}</p>
                 )}
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="contactNumber">Contact Number</label>
-                    <input
+                    <Label htmlFor="contactNumber">Contact Number</Label>
+                    <Input
                         type="text"
                         id="contactNumber"
                         name="contactNumber"
@@ -122,7 +128,10 @@ const PaymentForm = ({
                                 contactNumber: "",
                             }));
                         }}
-                        className="p-3 rounded-md text-slate-800 outline-none"
+                        className={`${
+                            error.contactNumber &&
+                            "outline-double outline-2 outline-red-500"
+                        }`}
                     />
                 </div>
                 {error.contactNumber && (
@@ -131,15 +140,16 @@ const PaymentForm = ({
                     </p>
                 )}
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="depositScreenshot">
+                    <Label htmlFor="depositScreenshot">
                         Deposit Screenshots
-                    </label>
+                    </Label>
                     <input
                         type="file"
                         id="depositScreenshot"
                         name="depositScreenshot"
                         accept="image/*"
                         onChange={handleFileChange}
+                        className={`${error.depositScreenshot && "p-2 rounded-md outline-double outline-2 outline-red-500"}`}
                     />
                 </div>
                 {error.depositScreenshot && (
@@ -148,19 +158,10 @@ const PaymentForm = ({
                     </p>
                 )}
             </div>
-            <button
-                type="submit"
-                className="w-full p-3 rounded-md font-semibold bg-slate-100 text-slate-800 hover:bg-opacity-80"
-            >
-                Submit
-            </button>
-            <button
-                type="button"
-                onClick={handleCancel}
-                className="w-full p-3 rounded-md font-semibold text-slate-100 hover:bg-slate-900"
-            >
+            <Button type="submit">Submit</Button>
+            <Button type="button" variant="secondary" onClick={handleCancel}>
                 Cancel
-            </button>
+            </Button>
         </form>
     );
 };
