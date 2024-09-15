@@ -1,7 +1,7 @@
 import { Slot } from "@/app/appointment/[appointmentDateId]/_types";
 import { create } from "zustand";
 
-export type ModalType = "createSlot" | "updateSlot";
+export type ModalType = "createSlot" | "updateSlot" | "deleteSlot";
 
 type ModalStore = {
     type: ModalType | null;
