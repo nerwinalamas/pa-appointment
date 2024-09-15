@@ -3,7 +3,8 @@ import { create } from "zustand";
 
 export type ModalType =
     | "createAppointment"
-    | "updateAppointment";
+    | "updateAppointment"
+    | "deleteAppointment";
 
 type ModalStore = {
     type: ModalType | null;
