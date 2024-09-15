@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function logout() {
     const supabase = createClient();
@@ -10,9 +9,9 @@ export async function logout() {
 
     if (error) {
         console.log("error message: ", error.message);
-        console.log("error status: ", error.status);
+        return { success: false, error: error.message };
     }
 
-    revalidatePath("/");
-    redirect("/login");
+    revalidatePath("/appointments");
+    return { success: true };
 }
