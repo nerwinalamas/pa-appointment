@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { reserveSlot } from "../action";
 import { userSchema } from "../_lib/schema";
 import { ErrorMessage } from "../_lib/type";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -89,7 +90,10 @@ const PaymentForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:w-96">
+        <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-3 md:w-96"
+        >
             <div className="flex flex-col gap-3">
                 <h3 className="text-base font-semibold">Payment Information</h3>
                 <div className="flex flex-col gap-2">
@@ -149,7 +153,10 @@ const PaymentForm = ({
                         name="depositScreenshot"
                         accept="image/*"
                         onChange={handleFileChange}
-                        className={`${error.depositScreenshot && "p-2 rounded-md outline-double outline-2 outline-red-500"}`}
+                        className={`${
+                            error.depositScreenshot &&
+                            "p-2 rounded-md outline-double outline-2 outline-red-500"
+                        }`}
                     />
                 </div>
                 {error.depositScreenshot && (
@@ -158,8 +165,15 @@ const PaymentForm = ({
                     </p>
                 )}
             </div>
-            <Button type="submit">Submit</Button>
-            <Button type="button" variant="secondary" onClick={handleCancel}>
+            <Button type="submit" className="bg-slate-950 text-slate-100 hover:bg-slate-700 focus:bg-slate-200">
+                Submit
+            </Button>
+            <Button
+                type="button"
+                variant="secondary"
+                onClick={handleCancel}
+                className="bg-slate-100 text-slate-950 hover:bg-slate-200 focus:bg-slate-200"
+            >
                 Cancel
             </Button>
         </form>

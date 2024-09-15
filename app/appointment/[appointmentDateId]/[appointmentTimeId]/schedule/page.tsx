@@ -1,8 +1,9 @@
-import { formatDate } from "@/app/appointment/_lib/utils";
-import { getAppointmentSchedule } from "../service";
-import { formatTime } from "../../_lib/utils";
-import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { getAppointmentSchedule } from "../service";
+import { formatDate } from "@/app/appointment/_lib/utils";
+import { formatTime } from "../../_lib/utils";
+
+import { ExternalLink } from "lucide-react";
 
 const Schedule = async ({
     params,

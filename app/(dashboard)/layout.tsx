@@ -1,5 +1,5 @@
-import ModalProvider from "@/providers/ModalProvider";
 import Navbar from "@/app/(dashboard)/_components/navbar";
+import ModalProvider from "@/providers/ModalProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 export default function DashboardLayout({

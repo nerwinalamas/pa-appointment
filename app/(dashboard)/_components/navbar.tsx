@@ -1,4 +1,7 @@
-import { Menu } from "lucide-react";
+import Link from "next/link";
+import Logout from "@/app/(auth)/logout/page";
+import ToggleThemeButton from "@/components/shared/toggle-theme-button";
+
 import {
     Sheet,
     SheetContent,
@@ -6,8 +9,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import Link from "next/link";
-import ToggleThemeButton from "../../../components/shared/toggle-theme-button";
+import { Menu } from "lucide-react";
 
 const navItems = ["Home", "Appointments", "Account"];
 
@@ -28,19 +30,25 @@ const Navbar = () => {
                         <SheetHeader>
                             <SheetTitle>Logo</SheetTitle>
                         </SheetHeader>
-                        <div className="h-full mt-5 flex flex-col items-center justify-start gap-2 text-slate-900 dark:text-slate-50">
+                        <div className="my-5 flex flex-col items-center justify-start gap-2 text-slate-900 dark:text-slate-50">
                             {navItems.map((item) => (
-                                <Link href="/" key={item} className="w-full p-2">
+                                <Link
+                                    href="/"
+                                    key={item}
+                                    className="w-full p-2"
+                                >
                                     {item}
                                 </Link>
                             ))}
                         </div>
+                        <Logout />
                     </SheetContent>
                 </Sheet>
             </div>
 
             <div className="hidden lg:flex lg:items-center lg:gap-2">
                 <ToggleThemeButton />
+                <Logout />
             </div>
         </nav>
     );

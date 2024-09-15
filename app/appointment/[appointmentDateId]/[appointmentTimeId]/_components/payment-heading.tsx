@@ -1,6 +1,6 @@
+import { getAppointmentSchedule } from "../service";
 import { formatDate } from "@/app/appointment/_lib/utils";
 import { formatTime } from "../../_lib/utils";
-import { getAppointmentSchedule } from "../service";
 
 const PaymentHeading = async ({
     dateId,

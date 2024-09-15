@@ -1,6 +1,6 @@
-import AppointmentList from "./_components/appointment-list";
-import { AppointmentProps } from "./_types";
 import { getAppointmentsWithSlotCount } from "./service";
+import { AppointmentProps } from "./_types";
+import AppointmentList from "./_components/appointment-list";
 
 const Appointment = async () => {
     const { data, error } = await getAppointmentsWithSlotCount();

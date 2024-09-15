@@ -1,6 +1,6 @@
-import { formatTime } from "../_lib/utils";
-import { Slot } from "../_types";
 import Link from "next/link";
+import { Slot } from "../_types";
+import { formatTime } from "../_lib/utils";
 
 const TimeCard = ({
     id,

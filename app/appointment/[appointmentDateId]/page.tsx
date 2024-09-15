@@ -1,6 +1,7 @@
-import BackButton from "@/components/shared/back-button";
-import TimeCard from "./_components/time-card";
 import { getAllSlots } from "./service";
+import TimeCard from "./_components/time-card";
+
+import AppointmentBackButton from "../_components/appointment-back-button";
 
 const SelectTime = async ({
     params,
@@ -15,7 +16,7 @@ const SelectTime = async ({
 
     return (
         <div className="mx-auto p-4 lg:w-[80%]">
-            <BackButton />
+            <AppointmentBackButton />
             <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
                 {data?.map((time) => (
                     <TimeCard

@@ -1,3 +1,10 @@
+import { FormEvent, useEffect, useState } from "react";
+import { updateSlot } from "@/app/(dashboard)/appointments/[appointmentId]/action";
+import { ErrorState } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/type";
+import { slotSchema } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/schema";
+import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
+import { useSlotModal } from "@/hooks/useSlotModal";
+
 import {
     Dialog,
     DialogContent,
@@ -5,15 +12,9 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { FormEvent, useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
-import { useSlotModal } from "@/hooks/useSlotModal";
-import { updateSlot } from "@/app/(dashboard)/appointments/[appointmentId]/action";
-import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
-import { slotSchema } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/schema";
-import { ErrorState } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/type";
 
 const UpdateSlot = () => {
     const { isOpen, onClose, type, data } = useSlotModal();
@@ -106,7 +107,7 @@ const UpdateSlot = () => {
                         name="startTime"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
-                        className="p-2 rounded-md font-medium text-slate-800"
+                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
                     />
                     {error.startTime && (
                         <p className="text-sm text-red-500">
@@ -120,7 +121,7 @@ const UpdateSlot = () => {
                         name="endTime"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
-                        className="p-2 rounded-md font-medium text-slate-800"
+                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
                     />
                     {error.endTime && (
                         <p className="text-sm text-red-500">{error.endTime}</p>
@@ -133,9 +134,7 @@ const UpdateSlot = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit">
-                            Save
-                        </Button>
+                        <Button type="submit">Save</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

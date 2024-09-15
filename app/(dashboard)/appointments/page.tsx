@@ -1,4 +1,13 @@
+
+import { Suspense } from "react";
+import { redirect } from "next/navigation";
+import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
 import { formatDate } from "@/app/appointment/_lib/utils";
+import AppointmentButton from "./_components/appointment-button";
+import AppointmentTableBody from "./_components/appointment-table-body";
+import AppointmentPagination from "./_components/appointment-pagination";
+import AppointmentDownload from "./_components/appointment-download";
+
 import {
     Table,
     TableBody,
@@ -8,13 +17,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import AppointmentButton from "./_components/appointment-button";
-import AppointmentTableBody from "./_components/appointment-table-body";
-import AppointmentPagination from "./_components/appointment-pagination";
-import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
-import { Suspense } from "react";
-import AppointmentDownload from "./_components/appointment-download";
-import { redirect } from "next/navigation";
 
 const Appointments = async ({
     searchParams,

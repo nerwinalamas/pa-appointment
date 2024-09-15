@@ -1,3 +1,9 @@
+import { FormEvent, useState } from "react";
+import { createAppointment } from "@/app/(dashboard)/appointments/action";
+import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
+import { useAppointmentModal } from "@/hooks/useAppointmentModal";
+import { cn } from "@/lib/utils";
+
 import {
     Dialog,
     DialogContent,
@@ -5,22 +11,17 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { FormEvent, useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import { Calendar as CalendarIcon } from "lucide-react";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { format, isBefore } from "date-fns";
-import { Label } from "../ui/label";
-import { createAppointment } from "@/app/(dashboard)/appointments/action";
 import toast from "react-hot-toast";
-import { useAppointmentModal } from "@/hooks/useAppointmentModal";
-import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
 
 const CreateAppointment = () => {
     const { isOpen, onClose, type } = useAppointmentModal();
@@ -77,7 +78,7 @@ const CreateAppointment = () => {
                             <Button
                                 variant={"outline"}
                                 className={cn(
-                                    "w-[280px] justify-start text-left font-normal",
+                                    "justify-start text-left font-normal",
                                     !date && "text-muted-foreground"
                                 )}
                             >
@@ -112,6 +113,7 @@ const CreateAppointment = () => {
                                         new Date(formattedCurrentDate)
                                     );
                                 }}
+                                className="flex items-start justify-start"
                             />
                         </PopoverContent>
                     </Popover>

@@ -1,3 +1,9 @@
+import { FormEvent, useState } from "react";
+import { createSlot } from "@/app/(dashboard)/appointments/[appointmentId]/action";
+import { slotSchema } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/schema";
+import { ErrorState } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/type";
+import { useSlotModal } from "@/hooks/useSlotModal";
+
 import {
     Dialog,
     DialogContent,
@@ -5,14 +11,9 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { FormEvent, useState } from "react";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
-import { createSlot } from "@/app/(dashboard)/appointments/[appointmentId]/action";
-import { useSlotModal } from "@/hooks/useSlotModal";
-import { slotSchema } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/schema";
-import { ErrorState } from "@/app/(dashboard)/appointments/[appointmentId]/_lib/type";
 
 const CreateSlot = () => {
     const { isOpen, onClose, type, data } = useSlotModal();

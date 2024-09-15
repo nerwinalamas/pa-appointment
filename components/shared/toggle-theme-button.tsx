@@ -1,8 +1,9 @@
 "use client";
 
-import { useThemeStore } from "@/hooks/useTheme";
 import { useTheme } from "next-themes";
-import { Button } from "../ui/button";
+import { useThemeStore } from "@/hooks/useTheme";
+
+import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 
 const ToggleThemeButton = () => {
@@ -16,7 +17,7 @@ const ToggleThemeButton = () => {
     };
 
     return (
-        <Button variant="secondary" onClick={toggleTheme}>
+        <Button variant="secondary" onClick={toggleTheme} className="hover:bg-slate-200 focus:bg-slate-200 dark:hover:bg-slate-700 dark:focus:bg-slate-700">
             {theme === "light" ? <Sun /> : <Moon />}
         </Button>
     );

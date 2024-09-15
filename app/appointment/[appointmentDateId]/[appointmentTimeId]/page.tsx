@@ -1,4 +1,5 @@
-import BackButton from "@/components/shared/back-button";
+
+import AppointmentBackButton from "../../_components/appointment-back-button";
 import PaymentForm from "./_components/payment-form";
 import PaymentHeading from "./_components/payment-heading";
 import PaymentMethod from "./_components/payment-method";
@@ -10,7 +11,7 @@ const PaymentInformation = ({
 }) => {
     return (
         <div className="mx-auto p-4 lg:w-[80%]">
-            <BackButton />
+            <AppointmentBackButton />
             <div className="h-full mt-5 flex flex-col items-center justify-center gap-2">
                 <PaymentHeading
                     dateId={params.appointmentDateId}
