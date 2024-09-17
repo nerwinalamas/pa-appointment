@@ -10,15 +10,12 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-
-const navItems = ["Home", "Appointments", "Account"];
+import { items } from "../_lib/constants";
 
 const Navbar = () => {
     return (
-        <nav className="p-4 flex items-center justify-between lg:px-20">
-            <Link href="/appointment">
-                <h1 className="text-xl font-semibold">Logo</h1>
-            </Link>
+        <nav className="p-4 flex items-center justify-between bg-slate-100 dark:bg-slate-950">
+            <div></div>
 
             <div className="flex items-center gap-5 lg:hidden">
                 <ToggleThemeButton />
@@ -31,13 +28,13 @@ const Navbar = () => {
                             <SheetTitle>Logo</SheetTitle>
                         </SheetHeader>
                         <div className="my-5 flex flex-col items-center justify-start gap-2 text-slate-900 dark:text-slate-50">
-                            {navItems.map((item) => (
+                            {items.map((item) => (
                                 <Link
-                                    href="/"
-                                    key={item}
+                                    href={item.url}
+                                    key={item.id}
                                     className="w-full p-2"
                                 >
-                                    {item}
+                                    {item.name}
                                 </Link>
                             ))}
                         </div>
