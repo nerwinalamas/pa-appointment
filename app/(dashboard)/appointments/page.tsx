@@ -44,7 +44,7 @@ const Appointments = async ({
     }
 
     return (
-        <div className="flex flex-col items-end gap-2 mt-5 pb-20 lg:pb-10 lg:gap-0 lg:w-[90%] lg:mx-auto xl:w-[65%]">
+        <div className="flex flex-col items-end gap-2 pt-5 pb-20 lg:pb-12 lg:gap-0 lg:mx-auto">
             <div className="w-full p-4 flex justify-end items-center gap-2">
                 <AppointmentButton />
                 <AppointmentDownload />
