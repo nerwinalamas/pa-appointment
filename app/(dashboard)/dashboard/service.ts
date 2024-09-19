@@ -16,3 +16,32 @@ export const getAllBookingsWithAppointmentDate = async () => {
 
     return { success: true, data };
 };
+
+export const getAllTotalBookings = async () => { 
+    const supabase = await createClient();
+
+    const { count, error } = await supabase
+        .from("slots")
+        .select("*", { count: "exact", head: true})
+        .eq("is_booked", true);
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    return { success: true, count };
+}
+
+export const getAllTotalSlots = async () => { 
+    const supabase = await createClient();
+
+    const { count, error } = await supabase
+        .from("slots")
+        .select("*", { count: "exact", head: true});
+
+    if (error) {
+        return { success: false, error: error.message };
+    }
+
+    return { success: true, count };
+}
