@@ -13,7 +13,7 @@ import {
 import { ChartContainer } from "@/components/ui/chart";
 import { TrendingUp } from "lucide-react";
 
-const DashboardTotalBookingsChart = () => {
+const DashboardTotalBookingsChart = ({ count }: { count: number }) => {
     return (
         <div className="flex flex-col items-center justify-center gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 row-span-2 md:col-span-2 xl:col-span-1">
             <ChartContainer
@@ -63,7 +63,7 @@ const DashboardTotalBookingsChart = () => {
                                                 y={viewBox.cy}
                                                 className="fill-foreground text-4xl font-bold"
                                             >
-                                                {chartData2[0].visitors.toLocaleString()}
+                                                {count}
                                             </tspan>
                                             <tspan
                                                 x={viewBox.cx}
