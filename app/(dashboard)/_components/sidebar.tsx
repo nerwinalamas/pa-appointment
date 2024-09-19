@@ -8,7 +8,7 @@ const Sidebar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="hidden lg:w-60 lg:h-screen lg:p-4 lg:flex lg:flex-col lg:gap-5 bg-slate-100 dark:bg-slate-950">
+        <div className="hidden xl:w-60 xl:h-screen xl:p-4 xl:flex xl:flex-col xl:gap-5 bg-slate-100 dark:bg-slate-950">
             <Link href="/appointment" className="p-2">
                 <h1 className="text-xl text-center font-semibold">Logo</h1>
             </Link>
