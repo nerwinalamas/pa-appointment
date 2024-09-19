@@ -9,7 +9,7 @@ const DashboardBookings = () => {
                 <ArrowUp size={18} strokeWidth={2} />
                 <p>10.4%</p>
             </div>
-            <p className="text-xs text-slate-700">for this month</p>
+            <p className="text-xs text-slate-700">for today</p>
         </div>
     );
 };
