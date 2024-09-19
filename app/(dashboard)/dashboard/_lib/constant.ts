@@ -1,3 +1,5 @@
+export const DEPOSIT_AMOUNT = 10;
+
 export const chartData = [
     { month: "January", booking: 186, availableSlots: 80 },
     { month: "February", booking: 305, availableSlots: 200 },
@@ -7,6 +9,4 @@ export const chartData = [
     { month: "June", booking: 214, availableSlots: 140 },
 ];
 
-export const chartData2 = [
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-];
+export const chartData2 = [{ visitors: 200, fill: "var(--color-safari)" }];
