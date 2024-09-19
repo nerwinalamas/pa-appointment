@@ -7,7 +7,7 @@ import { useAppointmentModal } from "@/hooks/useAppointmentModal";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-const AppointmentTableBody = ({
+const AppointmentTableRow = ({
     appointment,
     formattedDate,
     dayName,
@@ -19,20 +19,20 @@ const AppointmentTableBody = ({
     const { onOpen } = useAppointmentModal();
 
     return (
-        <TableRow className="grid lg:grid-cols-7">
-            <TableCell className="lg:col-span-2">
+        <TableRow className="grid xl:grid-cols-7">
+            <TableCell className="xl:col-span-2">
                 {formattedDate} - {dayName}
             </TableCell>
-            <TableCell className="lg:text-center">
+            <TableCell className="xl:text-center">
                 {appointment.available_slots}
             </TableCell>
-            <TableCell className="lg:text-center">
+            <TableCell className="xl:text-center">
                 {appointment.booked_slots}
             </TableCell>
-            <TableCell className="lg:text-center">
+            <TableCell className="xl:text-center">
                 {appointment.available_slots + appointment.booked_slots}
             </TableCell>
-            <TableCell className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-center lg:col-span-2">
+            <TableCell className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-center xl:col-span-2">
                 <Link href={`/appointments/${appointment.id}`}>
                     <Button variant="secondary" className="w-full hover:bg-slate-200 focus:bg-slate-200 dark:hover:bg-slate-700 dark:focus:bg-slate-700">
                         Read
@@ -57,4 +57,4 @@ const AppointmentTableBody = ({
     );
 };
 
-export default AppointmentTableBody;
+export default AppointmentTableRow;
