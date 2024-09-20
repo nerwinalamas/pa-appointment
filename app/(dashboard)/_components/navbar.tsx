@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import Logout from "@/app/(auth)/logout/page";
 import ToggleThemeButton from "@/components/shared/toggle-theme-button";
 
@@ -13,13 +16,15 @@ import { Menu } from "lucide-react";
 import { items } from "../_lib/constants";
 
 const Navbar = () => {
+    const [openSheet, setOpenSheet] = useState(false);
+
     return (
         <nav className="p-4 flex items-center justify-between bg-slate-100 dark:bg-slate-950">
             <div></div>
 
             <div className="flex items-center gap-5 lg:hidden">
                 <ToggleThemeButton />
-                <Sheet>
+                <Sheet open={openSheet} onOpenChange={setOpenSheet}>
                     <SheetTrigger>
                         <Menu />
                     </SheetTrigger>
@@ -33,6 +38,7 @@ const Navbar = () => {
                                     href={item.url}
                                     key={item.id}
                                     className="w-full p-2"
+                                    onClick={() => setOpenSheet(false)}
                                 >
                                     {item.name}
                                 </Link>
