@@ -1,7 +1,7 @@
 import { Staff } from "@/app/(dashboard)/staff/_types";
 import { create } from "zustand";
 
-export type ModalType = "createStaff" | "updateStaff" | "deleteStaff";
+export type ModalType = "addStaff" | "updateStaff" | "deleteStaff";
 
 type ModalStore = {
     type: ModalType | null;

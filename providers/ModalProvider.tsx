@@ -6,7 +6,7 @@ import DeleteAppointment from "@/components/modals/DeleteAppointment";
 import CreateSlot from "@/components/modals/CreateSlot";
 import UpdateSlot from "@/components/modals/UpdateSlot";
 import DeleteSlot from "@/components/modals/DeleteSlot";
-import CreateStaff from "@/components/modals/CreateStaff";
+import AddStaff from "@/components/modals/AddStaff";
 import UpdateStaff from "@/components/modals/UpdateStaff";
 import DeleteStaff from "@/components/modals/DeleteStaff";
 
@@ -21,7 +21,7 @@ const ModalProvider = () => {
             <UpdateSlot />
             <DeleteSlot />
 
-            <CreateStaff />
+            <AddStaff />
             <UpdateStaff />
             <DeleteStaff />
         </>
