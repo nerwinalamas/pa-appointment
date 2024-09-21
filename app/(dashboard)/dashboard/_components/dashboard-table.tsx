@@ -10,13 +10,24 @@ import { ExternalLink } from "lucide-react";
 import { getAllBookingsWithAppointmentDate } from "../service";
 import { formatDate } from "@/app/appointment/_lib/utils";
 import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
+import { Suspense } from "react";
+import AppointmentPagination from "../../appointments/_components/appointment-pagination";
 
-const DashboardTable = async () => {
-    const { data: bookings, error } = await getAllBookingsWithAppointmentDate();
+const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }) => {
+    const page = parseInt(searchParamsPage) || 1;
+    const pageSize = 6;
+
+    const {
+        data: bookings,
+        error,
+        count,
+    } = await getAllBookingsWithAppointmentDate(page, pageSize);
 
     if (error) {
         return <h1>Error par</h1>;
     }
+
+    const totalPages = Math.ceil(count! / pageSize);
 
     return (
         <div className="flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 row-span-2 md:col-span-2 xl:col-span-3">
@@ -73,104 +84,16 @@ const DashboardTable = async () => {
                             </TableRow>
                         );
                     })}
-
-                    {/* <TableRow>
-                        <TableCell>September 17, 2024 - Tuesday</TableCell>
-                        <TableCell className="text-center">
-                            08:00 - 09:00
-                        </TableCell>
-                        <TableCell className="text-center">John Doe</TableCell>
-                        <TableCell className="text-center">
-                            09123456789
-                        </TableCell>
-                        <TableCell>
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={18} className="mx-auto" />
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>September 17, 2024 - Tuesday</TableCell>
-                        <TableCell className="text-center">
-                            08:00 - 09:00
-                        </TableCell>
-                        <TableCell className="text-center">John Doe</TableCell>
-                        <TableCell className="text-center">
-                            09123456789
-                        </TableCell>
-                        <TableCell>
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={18} className="mx-auto" />
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>September 17, 2024 - Tuesday</TableCell>
-                        <TableCell className="text-center">
-                            08:00 - 09:00
-                        </TableCell>
-                        <TableCell className="text-center">John Doe</TableCell>
-                        <TableCell className="text-center">
-                            09123456789
-                        </TableCell>
-                        <TableCell>
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={18} className="mx-auto" />
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>September 17, 2024 - Tuesday</TableCell>
-                        <TableCell className="text-center">
-                            08:00 - 09:00
-                        </TableCell>
-                        <TableCell className="text-center">John Doe</TableCell>
-                        <TableCell className="text-center">
-                            09123456789
-                        </TableCell>
-                        <TableCell>
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={18} className="mx-auto" />
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>September 17, 2024 - Tuesday</TableCell>
-                        <TableCell className="text-center">
-                            08:00 - 09:00
-                        </TableCell>
-                        <TableCell className="text-center">John Doe</TableCell>
-                        <TableCell className="text-center">
-                            09123456789
-                        </TableCell>
-                        <TableCell>
-                            <a
-                                href="/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={18} className="mx-auto" />
-                            </a>
-                        </TableCell>
-                    </TableRow> */}
                 </TableBody>
             </Table>
+            {count! > pageSize && (
+                <Suspense fallback={<div>Loading pagination...</div>}>
+                    <AppointmentPagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                    />
+                </Suspense>
+            )}
         </div>
     );
 };
