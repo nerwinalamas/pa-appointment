@@ -7,7 +7,11 @@ import DashboardTable from "./_components/dashboard-table";
 import DashboardTotalBookingsChart from "./_components/dashboard-total-bookings-chart";
 import { getAllTotalBookings } from "./service";
 
-const Dashboard = async () => {
+const Dashboard = async ({
+    searchParams,
+}: {
+    searchParams: { page: string };
+}) => {
     const { count, error } = await getAllTotalBookings();
     
     if (error) {
@@ -21,7 +25,7 @@ const Dashboard = async () => {
             <DashboardTotalSlots />
             <DashboardTotalSales />
             <DashboardSlotAreaChart />
-            <DashboardTable />
+            <DashboardTable searchParamsPage={searchParams.page} />
             <DashboardTotalBookingsChart count={count as number} />
         </div>
     );
