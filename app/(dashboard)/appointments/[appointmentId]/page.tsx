@@ -40,7 +40,7 @@ const AppointmentId = async ({
     const { dayName, formattedDate } = formatDate(appointmentData.date);
 
     return (
-        <div className="flex flex-col items-end gap-2 mt-5 mb-20 lg:gap-0 lg:w-[90%] lg:mx-auto xl:w-[65%]">
+        <div className="flex flex-col items-end gap-2 pt-5 pb-20 lg:pb-12 lg:gap-0 lg:mx-auto xl:m-4 xl:p-4 xl:pb-10 bg-slate-100 dark:bg-slate-950">
             <div className="w-full p-4 flex justify-between items-center gap-2">
                 <BackButton />
                 {appointmentData && (

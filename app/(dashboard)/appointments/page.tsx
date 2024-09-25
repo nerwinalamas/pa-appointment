@@ -1,10 +1,9 @@
-
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
 import { formatDate } from "@/app/appointment/_lib/utils";
 import AppointmentButton from "./_components/appointment-button";
-import AppointmentTableBody from "./_components/appointment-table-body";
+import AppointmentTableRow from "./_components/appointment-table-row";
 import AppointmentPagination from "./_components/appointment-pagination";
 import AppointmentDownload from "./_components/appointment-download";
 
@@ -44,15 +43,15 @@ const Appointments = async ({
     }
 
     return (
-        <div className="flex flex-col items-end gap-2 mt-5 pb-20 lg:pb-10 lg:gap-0 lg:w-[90%] lg:mx-auto xl:w-[65%]">
+        <div className="flex flex-col items-end gap-2 pt-5 pb-20 lg:pb-12 lg:gap-0 lg:mx-auto xl:m-4 xl:p-4 xl:pb-10 bg-slate-100 dark:bg-slate-950">
             <div className="w-full p-4 flex justify-end items-center gap-2">
                 <AppointmentButton />
                 <AppointmentDownload />
             </div>
-            <Table className="grid gap-3 p-4 lg:gap-0">
-                <TableHeader className="hidden lg:grid">
-                    <TableRow className="lg:grid lg:grid-cols-7">
-                        <TableHead className="lg:col-span-2">Date</TableHead>
+            <Table className="grid gap-3 p-4 xl:gap-0">
+                <TableHeader className="hidden xl:grid">
+                    <TableRow className="xl:grid xl:grid-cols-7">
+                        <TableHead className="xl:col-span-2">Date</TableHead>
                         <TableHead className="text-center">
                             Available slots
                         </TableHead>
@@ -62,12 +61,12 @@ const Appointments = async ({
                         <TableHead className="text-center">
                             Total slots
                         </TableHead>
-                        <TableHead className="text-center lg:col-span-2">
+                        <TableHead className="text-center xl:col-span-2">
                             Actions
                         </TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className="grid gap-3 md:grid-cols-2 lg:grid-cols-1 lg:gap-0">
+                <TableBody className="grid gap-3 md:grid-cols-2 xl:grid-cols-1 xl:gap-0">
                     {data?.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={5} className="text-center">
@@ -80,7 +79,7 @@ const Appointments = async ({
                                 appointment.date
                             );
                             return (
-                                <AppointmentTableBody
+                                <AppointmentTableRow
                                     key={appointment.id}
                                     appointment={appointment}
                                     formattedDate={formattedDate}
@@ -91,11 +90,11 @@ const Appointments = async ({
                     )}
                 </TableBody>
                 <TableFooter className="grid">
-                    <TableRow className="grid grid-cols-2 lg:grid-cols-7">
-                        <TableCell colSpan={4} className="lg:col-span-5">
+                    <TableRow className="grid grid-cols-2 xl:grid-cols-7">
+                        <TableCell colSpan={4} className="xl:col-span-5">
                             Page {page} of {totalPages}
                         </TableCell>
-                        <TableCell className="text-right lg:col-span-2">
+                        <TableCell className="text-right xl:col-span-2">
                             {count} rows
                         </TableCell>
                     </TableRow>

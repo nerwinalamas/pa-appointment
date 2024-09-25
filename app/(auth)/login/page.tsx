@@ -48,7 +48,7 @@ const Login = () => {
             const response = await login(formData);
             if (response.success) {
                 toast.success("Login successfully");
-                router.replace("/appointments");
+                router.replace("/dashboard");
             } else {
                 toast.error(`${response.error}`);
                 console.log("Error in Login: ", error);

@@ -3,18 +3,19 @@ import { createClient } from "@/utils/supabase/server";
 export const getAppointmentsWithSlotCount = async () => {
     const supabase = await createClient();
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayISO = today.toISOString().slice(0, 10);
+    // comment out ko muna for deployment purposes
+    // const today = new Date();
+    // today.setHours(0, 0, 0, 0);
+    // const todayISO = today.toISOString().slice(0, 10);
 
-    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1);
-    const lastDayISO = lastDayOfMonth.toISOString().slice(0, 10);
+    // const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1);
+    // const lastDayISO = lastDayOfMonth.toISOString().slice(0, 10);
 
     const { data, error } = await supabase
         .from("appointments")
         .select("*")
-        .gte("date", todayISO)
-        .lte("date", lastDayISO)
+        // .gte("date", todayISO)
+        // .lte("date", lastDayISO)
         .order("date", { ascending: true });
 
     if (error) {
