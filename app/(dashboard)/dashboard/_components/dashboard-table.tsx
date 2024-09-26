@@ -1,3 +1,9 @@
+import { Suspense } from "react";
+import { getAllBookingsWithAppointmentDate } from "../service";
+import { formatDate } from "@/app/appointment/_lib/utils";
+import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
+import PageHandler from "@/components/shared/page-handler";
+
 import {
     Table,
     TableBody,
@@ -7,11 +13,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { ExternalLink } from "lucide-react";
-import { getAllBookingsWithAppointmentDate } from "../service";
-import { formatDate } from "@/app/appointment/_lib/utils";
-import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
-import { Suspense } from "react";
-import AppointmentPagination from "../../appointments/_components/appointment-pagination";
 
 const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }) => {
     const page = parseInt(searchParamsPage) || 1;
@@ -88,7 +89,7 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
             </Table>
             {count! > pageSize && (
                 <Suspense fallback={<div>Loading pagination...</div>}>
-                    <AppointmentPagination
+                    <PageHandler
                         currentPage={page}
                         totalPages={totalPages}
                     />
