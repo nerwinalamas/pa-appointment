@@ -1,3 +1,8 @@
+// import { Suspense } from "react";
+// import PageHandler from "@/components/shared/page-handler";
+import StaffCreateButton from "./_components/staff-create-button";
+import StaffTableRow from "./_components/staff-table-row";
+
 import {
     Table,
     TableBody,
@@ -6,8 +11,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import StaffCreateButton from "./_components/staff-create-button";
-import StaffTableRow from "./_components/staff-table-row";
 
 const data = [
     {
@@ -71,6 +74,11 @@ const Staff = () => {
                     )}
                 </TableBody>
             </Table>
+            {/* {count! > pageSize && (
+                <Suspense fallback={<div>Loading pagination...</div>}>
+                    <PageHandler currentPage={page} totalPages={totalPages} />
+                </Suspense>
+            )} */}
         </div>
     );
 };
