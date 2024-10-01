@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
 import { formatDate } from "@/app/appointment/_lib/utils";
+import PageHandler from "@/components/shared/page-handler";
 import AppointmentButton from "./_components/appointment-button";
 import AppointmentTableRow from "./_components/appointment-table-row";
-import AppointmentPagination from "./_components/appointment-pagination";
 import AppointmentDownload from "./_components/appointment-download";
 
 import {
@@ -102,7 +102,7 @@ const Appointments = async ({
             </Table>
             {count! > pageSize && (
                 <Suspense fallback={<div>Loading pagination...</div>}>
-                    <AppointmentPagination
+                    <PageHandler
                         currentPage={page}
                         totalPages={totalPages}
                     />

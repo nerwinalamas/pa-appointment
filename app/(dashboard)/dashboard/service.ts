@@ -57,9 +57,8 @@ export const getAppointmentByTodaysDate = async () => {
     const supabase = await createClient();
 
     const today = new Date();
-    const todayISO = today.toISOString().slice(0, 10);
-    const startOfDay = `${todayISO}T00:00:00+00:00`;
-    const endOfDay = `${todayISO}T23:59:59+00:00`;
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
 
     const { data, error } = await supabase
         .from("appointments")
