@@ -28,7 +28,7 @@ const Navbar = () => {
                     <SheetTrigger>
                         <Menu />
                     </SheetTrigger>
-                    <SheetContent>
+                    <SheetContent aria-describedby={undefined}>
                         <SheetHeader>
                             <SheetTitle>Logo</SheetTitle>
                         </SheetHeader>

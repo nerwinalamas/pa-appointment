@@ -36,7 +36,7 @@ const DeleteStaff = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Delete Staff</DialogTitle>
                 </DialogHeader>

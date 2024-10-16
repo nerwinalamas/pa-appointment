@@ -95,7 +95,7 @@ const UpdateSlot = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Update Slot</DialogTitle>
                 </DialogHeader>

@@ -67,7 +67,7 @@ const CreateAppointment = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Create Appointment</DialogTitle>
                 </DialogHeader>

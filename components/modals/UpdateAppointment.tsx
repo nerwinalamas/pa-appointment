@@ -1,4 +1,3 @@
-
 import { FormEvent, useEffect, useState } from "react";
 import { updateAppointment } from "@/app/(dashboard)/appointments/action";
 import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
@@ -78,7 +77,7 @@ const UpdateAppointment = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Update Appointment</DialogTitle>
                 </DialogHeader>

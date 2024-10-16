@@ -83,7 +83,7 @@ const CreateSlot = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Create Slot</DialogTitle>
                 </DialogHeader>
