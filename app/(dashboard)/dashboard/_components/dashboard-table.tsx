@@ -55,7 +55,7 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
                             booking.start_time
                         );
                         const formattedEndTime = formatTime(booking.end_time);
-
+                        
                         return (
                             <TableRow key={booking.id}>
                                 <TableCell>
@@ -64,7 +64,7 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
                                 <TableCell className="text-center">
                                     {formattedStartTime} - {formattedEndTime}
                                 </TableCell>
-                                <TableCell className="text-center">
+                                <TableCell className="text-center capitalize">
                                     {booking.name}
                                 </TableCell>
                                 <TableCell className="text-center">
