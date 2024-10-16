@@ -15,8 +15,10 @@ const TimeCard = ({
     if (is_booked) {
         return (
             <div className="flex items-center justify-center h-40 p-4 rounded-lg cursor-not-allowed bg-red-400">
-                <div className="text-xl font-bold">
-                    {formattedStartTime} - {formattedEndTime}
+                <div className="text-xl font-semibold flex flex-col gap-2 items-center">
+                    <p>{formattedStartTime}</p>
+                    <p>to</p>
+                    <p>{formattedEndTime}</p>
                 </div>
             </div>
         );
@@ -27,8 +29,10 @@ const TimeCard = ({
             href={`/appointment/${appointmentDateId}/${id}`}
             className="flex items-center justify-center h-40 p-4 rounded-lg bg-green-400"
         >
-            <div className="text-xl font-bold">
-                {formattedStartTime} - {formattedEndTime}
+            <div className="text-xl font-semibold flex flex-col gap-2 items-center">
+                <p>{formattedStartTime}</p>
+                <p>to</p>
+                <p>{formattedEndTime}</p>
             </div>
         </Link>
     );

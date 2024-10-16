@@ -35,7 +35,7 @@ const UpdateStaff = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
                 <DialogHeader>
                     <DialogTitle>Update Staff</DialogTitle>
                 </DialogHeader>

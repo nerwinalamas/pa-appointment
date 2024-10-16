@@ -82,11 +82,11 @@ const DashboardTotalBookingsChart = ({ count }: { count: number }) => {
             </ChartContainer>
             <div className="flex flex-col items-center justify-center gap-2 text-sm">
                 <h3 className="flex items-center gap-2 font-medium leading-none">
-                    Trending up by 5.2% this month{" "}
+                    Total bookings up by 5.2% overall{" "}
                     <TrendingUp className="h-4 w-4" />
                 </h3>
                 <p className="leading-none text-muted-foreground">
-                    Showing total visitors for this month
+                    Displaying total bookings
                 </p>
             </div>
         </div>
