@@ -1,7 +1,10 @@
 import useAuth from "@/hooks/useAuth";
 import { getUser } from "./service";
 import { User } from "./_types";
-import AccountSettingsForm from "./_components/account-settings-form";
+import AccountSettingsAccountInformation from "./_components/account-settings-account-information";
+import AccountSettingsChangePassword from "./_components/account-settings-change-password";
+import AccountSettingsChangeEmail from "./_components/account-settings-change-email";
+import AccountSettingsDeleteAccount from "./_components/account-settings-delete-account";
 
 const Account = async () => {
     const { data: authData, error: authError } = await useAuth();
@@ -22,8 +25,12 @@ const Account = async () => {
     }
 
     return (
-        <div className="flex flex-col gap-2 pt-5 pb-20 lg:pb-12 lg:gap-0 lg:mx-auto xl:m-4 xl:p-4 bg-slate-100 dark:bg-slate-950">
-            <AccountSettingsForm user={userData as User} />
+        <div className="flex flex-col gap-2 pt-5 pb-20 lg:pb-12 lg:gap-4 lg:mx-auto xl:m-4 xl:p-4 bg-slate-100 dark:bg-slate-950">
+            <h1 className="text-2xl font-bold">Account Settings</h1>
+            <AccountSettingsAccountInformation user={userData as User} />
+            <AccountSettingsChangePassword user={userData as User} />
+            <AccountSettingsChangeEmail user={userData as User} />
+            <AccountSettingsDeleteAccount user={userData as User} />
         </div>
     );
 };
