@@ -11,16 +11,46 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { User } from "../_types";
-import { useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { updatePassword } from "../action";
 
 const AccountSettingsChangePassword = ({ user }: { user: User }) => {
+    const [email, setEmail] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleChangePassword = () => {};
+    useEffect(() => {
+        if (user) {
+            setEmail(user.email || "");
+        }
+    }, [user]);
 
-    console.log("user: ", user)
+    const handleChangePassword = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!user) return;
+        if (newPassword !== confirmPassword) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("currentPassword", currentPassword);
+            formData.append("newPassword", newPassword);
+
+            const response = await updatePassword(formData);
+            if (response.success) {
+                toast.success("Update password successful.");
+            } else {
+                toast.error("Failed to update password.");
+            }
+        } catch (error) {
+            console.log("Error updating password: ", error);
+            toast.error("Something went wrong.");
+        }
+    };
+
     return (
         <Card>
             <CardHeader>
