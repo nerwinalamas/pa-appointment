@@ -9,6 +9,7 @@ import DeleteSlot from "@/components/modals/DeleteSlot";
 import AddStaff from "@/components/modals/AddStaff";
 import UpdateStaff from "@/components/modals/UpdateStaff";
 import DeleteStaff from "@/components/modals/DeleteStaff";
+import DeleteAccount from "@/components/modals/DeleteAccount";
 
 const ModalProvider = () => {
     return (
@@ -24,6 +25,8 @@ const ModalProvider = () => {
             <AddStaff />
             <UpdateStaff />
             <DeleteStaff />
+
+            <DeleteAccount />
         </>
     );
 };
