@@ -1,5 +1,7 @@
 export type Staff = {
-    name: string;
+    id?: string;
+    first_name: string;
+    last_name: string;
     contact_number: string;
     email: string;
     role: string;
@@ -7,7 +9,8 @@ export type Staff = {
 };
 
 export type ErrorState = {
-    name?: string;
+    first_name?: string;
+    last_name?: string;
     contact_number?: string;
     email?: string;
     role?: string;
