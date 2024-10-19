@@ -11,10 +11,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { User } from "../_types";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AccountSettingsChangeEmail = ({ user }: { user: User }) => {
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [newEmail, setNewEmail] = useState("");
 
     useEffect(() => {
@@ -23,7 +25,30 @@ const AccountSettingsChangeEmail = ({ user }: { user: User }) => {
         }
     }, [user]);
 
-    const handleChangeEmail = () => {};
+    const handleChangeEmail = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!user) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("password", password);
+            formData.append("newEmail", newEmail);
+
+            // const response = await updateEmail(formData);
+            // if (response.success) {
+            //     toast.success("Update email successful.");
+            // } else {
+            //     toast.error("Failed to update email.");
+            // }
+            toast.success("This feature is under development");
+        } catch (error) {
+            console.log("Error updating email: ", error);
+            toast.error("Something went wrong.");
+        }
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -36,15 +61,26 @@ const AccountSettingsChangeEmail = ({ user }: { user: User }) => {
                     className="flex flex-col gap-3"
                 >
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="currentEmail">Current Email</Label>
+                        <Label htmlFor="email">Current Email</Label>
                         <Input
                             type="text"
-                            id="currentEmail"
-                            name="currentEmail"
+                            id="email"
+                            name="email"
                             placeholder="Current Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             disabled
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Confirm Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -53,6 +89,7 @@ const AccountSettingsChangeEmail = ({ user }: { user: User }) => {
                             type="text"
                             id="newEmail"
                             name="newEmail"
+                            placeholder="New Email"
                             value={newEmail}
                             onChange={(e) => setNewEmail(e.target.value)}
                         />
