@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
 import { User } from "../_types";
+import { useAccountModal } from "@/hooks/useAccountModal";
 
 const AccountSettingsDeleteAccount = ({ user }: { user: User }) => {
-    const handleDeleteAccount = () => {};
+    const { onOpen } = useAccountModal();
 
-    console.log("user: ", user);
     return (
         <Card>
             <CardHeader>
@@ -34,7 +34,7 @@ const AccountSettingsDeleteAccount = ({ user }: { user: User }) => {
                 <Button
                     type="button"
                     variant="destructive"
-                    onClick={handleDeleteAccount}
+                    onClick={() => onOpen("deleteAccount", user)}
                 >
                     Delete Account
                 </Button>
