@@ -3,134 +3,150 @@
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { FormEvent, useState } from "react";
-import { Label } from "../ui/label";
+import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useStaffModal } from "@/hooks/useStaffModal";
-import { ErrorState } from "@/app/(dashboard)/staff/_types";
+import { ScrollArea } from "../ui/scroll-area";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "../ui/table";
+import { Checkbox } from "../ui/checkbox";
+import { User } from "@/app/(dashboard)/account/_types";
+import { createClient } from "@/utils/supabase/client";
+import toast from "react-hot-toast";
+import { createStaff } from "@/app/(dashboard)/staff/action";
 
 const AddStaff = () => {
+    const supabase = createClient();
+
     const { isOpen, onClose, type } = useStaffModal();
     const isModalOpen = isOpen && type === "addStaff";
 
-    const [name, setName] = useState("");
-    const [contactNumber, setContactNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
-    const [status, setStatus] = useState("");
-    const [error, setError] = useState<ErrorState>({});
+    const [users, setUsers] = useState<User[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const { data, error } = await supabase.from("users").select("*");
+
+            if (error) {
+                console.log("Error fetching users: ", error.message);
+            } else {
+                setUsers(data);
+                setFilteredUsers(data);
+            }
+        };
+        getUsers();
+    }, [supabase, isModalOpen]);
+
+    useEffect(() => {
+        const filtered = users.filter((user) =>
+            user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+    }, [searchTerm, users]);
+
+    const handleUserSelection = (user: User) => {
+        setSelectedUsers((prev) =>
+            prev.includes(user)
+                ? prev.filter((u) => u.id !== user.id)
+                : [...prev, user]
+        );
+    };
 
     const handleDialogChange = () => {
         onClose();
     };
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
+    const handleAddStaff = async (staff: User[]) => {
+        try {
+            const response = await createStaff(staff);
+            if (response.success) {
+                toast.success("Staff added successfully.");
+            } else {
+                toast.error(`${response.error}`);
+            }
+        } catch (error) {
+            console.log("Error adding staff: ", error);
+            toast.error("Something went wrong.");
+        } finally {
+            onClose();
+            setSearchTerm("");
+            setSelectedUsers([]);
+        }
     };
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Add Staff</DialogTitle>
+                    <DialogTitle>Add New Staff Members</DialogTitle>
+                    <DialogDescription>
+                        Search and select users from the list below to add them
+                        as staff members.
+                    </DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                    <Label htmlFor="name">Name</Label>
+                <div className="flex items-center space-x-2 mb-4">
                     <Input
                         type="text"
-                        id="name"
-                        name="name"
-                        value={name}
-                        onChange={(e) => {
-                            setName(e.target.value);
-                            setError((prev) => ({ ...prev, name: "" }));
-                        }}
-                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
+                        placeholder="Search by email..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="flex-1"
                     />
-                    {error.name && (
-                        <p className="text-sm text-red-500">{error.name}</p>
-                    )}
-                    <Label htmlFor="contact_number">Contact Number</Label>
-                    <Input
-                        type="text"
-                        id="contact_number"
-                        name="contact_number"
-                        value={contactNumber}
-                        onChange={(e) => {
-                            setContactNumber(e.target.value);
-                            setError((prev) => ({
-                                ...prev,
-                                contact_number: "",
-                            }));
-                        }}
-                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
-                    />
-                    {error.contact_number && (
-                        <p className="text-sm text-red-500">
-                            {error.contact_number}
-                        </p>
-                    )}
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                        type="text"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                            setError((prev) => ({ ...prev, email: "" }));
-                        }}
-                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
-                    />
-                    {error.email && (
-                        <p className="text-sm text-red-500">{error.email}</p>
-                    )}
-                    <Label htmlFor="role">Role</Label>
-                    <Input
-                        type="text"
-                        id="role"
-                        name="role"
-                        value={role}
-                        onChange={(e) => {
-                            setRole(e.target.value);
-                            setError((prev) => ({ ...prev, role: "" }));
-                        }}
-                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
-                    />
-                    {error.role && (
-                        <p className="text-sm text-red-500">{error.role}</p>
-                    )}
-                    <Label htmlFor="status">Status</Label>
-                    <Input
-                        type="text"
-                        id="status"
-                        name="status"
-                        value={status}
-                        onChange={(e) => {
-                            setStatus(e.target.value);
-                            setError((prev) => ({ ...prev, status: "" }));
-                        }}
-                        className="p-2 rounded-md font-medium border bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50"
-                    />
-                    {error.status && (
-                        <p className="text-sm text-red-500">{error.status}</p>
-                    )}
-                    <DialogFooter className="mt-6">
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={handleDialogChange}
-                        >
-                            Cancel
-                        </Button>
-                        <Button type="submit">Create</Button>
-                    </DialogFooter>
-                </form>
+                </div>
+                <ScrollArea className="max-h-[300px] rounded-md border">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[50px] sticky top-0 bg-background">
+                                    Select
+                                </TableHead>
+                                <TableHead className="sticky top-0 bg-background">
+                                    Email
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {filteredUsers.map((user) => (
+                                <TableRow key={user.id}>
+                                    <TableCell>
+                                        <Checkbox
+                                            checked={selectedUsers.includes(
+                                                user
+                                            )}
+                                            onCheckedChange={() =>
+                                                handleUserSelection(user)
+                                            }
+                                        />
+                                    </TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </ScrollArea>
+                <DialogFooter>
+                    <Button
+                        onClick={() => handleAddStaff(selectedUsers)}
+                        disabled={selectedUsers.length === 0}
+                    >
+                        Add Selected Staff Members
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
