@@ -1,4 +1,5 @@
-import { AppointmentProps } from "@/app/appointment/_types";
+
+import { AppointmentProps } from "@/app/(dashboard)/appointments/_types";
 import { create } from "zustand";
 
 export type ModalType =
