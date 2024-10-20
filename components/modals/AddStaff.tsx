@@ -9,10 +9,10 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useStaffModal } from "@/hooks/useStaffModal";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Table,
     TableBody,
@@ -20,8 +20,8 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "../ui/table";
-import { Checkbox } from "../ui/checkbox";
+} from "@/components/ui/table";
+import { Checkbox } from "@/components/ui/checkbox";
 import { User } from "@/app/(dashboard)/account/_types";
 import { createClient } from "@/utils/supabase/client";
 import toast from "react-hot-toast";
