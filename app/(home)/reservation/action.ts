@@ -8,28 +8,33 @@ export const reserveTimeSlot = async (formData: FormData) => {
     const time_slots = formData.get("timeSlots") as string;
     const name = formData.get("name") as string;
     const contact_number = formData.get("contactNumber") as string;
-    const deposit_screenshot = formData.get("depositScreenshot") as File;
+    const deposit_screenshot = formData.get("depositScreenshot") as File | null;
+    let publicUrl: string | null = null;
 
     const supabase = await createClient();
 
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const extension = deposit_screenshot.name.split(".").pop();
-    const filename = `${timestamp}.${extension}`;
+    if (deposit_screenshot) {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+        const extension = deposit_screenshot.name.split(".").pop();
+        const filename = `${timestamp}.${extension}`;
 
-    const { data: fileData, error: fileError } = await supabase.storage
-        .from("deposit-images")
-        .upload(`public/${filename}`, deposit_screenshot);
+        const { data: fileData, error: fileError } = await supabase.storage
+            .from("deposit-images")
+            .upload(`public/${filename}`, deposit_screenshot);
 
-    if (fileError) {
-        return {
-            success: false,
-            error: "Failed to upload deposit screenshot",
-        };
+        if (fileError) {
+            return {
+                success: false,
+                error: "Failed to upload deposit screenshot",
+            };
+        }
+
+        const {
+            data: { publicUrl: uploadedUrl },
+        } = supabase.storage.from("deposit-images").getPublicUrl(fileData.path);
+
+        publicUrl = uploadedUrl;
     }
-
-    const {
-        data: { publicUrl },
-    } = supabase.storage.from("deposit-images").getPublicUrl(fileData.path);
 
     const reservationData = {
         date,
