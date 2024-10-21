@@ -8,8 +8,8 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { FormEvent, useEffect, useState } from "react";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { useStaffModal } from "@/hooks/useStaffModal";
 import { Staff } from "@/app/(dashboard)/staff/_types";
 import {

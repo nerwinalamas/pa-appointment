@@ -1,19 +1,30 @@
 "use client";
 
 import { chartConfig } from "../_lib/chartConfig";
-import { chartData } from "../_lib/constant";
-
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { TARGET_BOOKINGS } from "../_lib/constant";
 import {
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart";
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
+} from "recharts";
 
-const DashboardSlotAreaChart = () => {
+type ChartData = {
+    month: string;
+    booking: number;
+};
+
+const DashboardSlotAreaChart = ({ chartData }: { chartData: ChartData[] }) => {
     return (
-        <div className="flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 row-span-2 md:col-span-2">
-            <ChartContainer config={chartConfig} className="h-full">
+        <ResponsiveContainer width="100%" height={300}>
+            <ChartContainer config={chartConfig}>
                 <AreaChart
                     accessibilityLayer
                     data={chartData}
@@ -30,17 +41,15 @@ const DashboardSlotAreaChart = () => {
                         tickMargin={8}
                         tickFormatter={(value) => value.slice(0, 3)}
                     />
+                    <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        tickFormatter={(value) => `${value}`}
+                        domain={[0, TARGET_BOOKINGS]}
+                    />
                     <ChartTooltip
                         cursor={false}
-                        content={<ChartTooltipContent indicator="dot" />}
-                    />
-                    <Area
-                        dataKey="availableSlots"
-                        type="natural"
-                        fill="var(--color-availableSlots)"
-                        fillOpacity={0.4}
-                        stroke="var(--color-availableSlots)"
-                        stackId="a"
+                        content={<ChartTooltipContent indicator="line" />}
                     />
                     <Area
                         dataKey="booking"
@@ -48,11 +57,10 @@ const DashboardSlotAreaChart = () => {
                         fill="var(--color-booking)"
                         fillOpacity={0.4}
                         stroke="var(--color-booking)"
-                        stackId="a"
                     />
                 </AreaChart>
             </ChartContainer>
-        </div>
+        </ResponsiveContainer>
     );
 };
 

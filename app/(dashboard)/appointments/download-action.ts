@@ -6,7 +6,7 @@ export const downloadAppointments = async () => {
     const supabase = await createClient();
 
     const { data, error } = await supabase
-        .from("appointments")
+        .from("reservations")
         .select("*")
         .order("date", { ascending: true })
         .csv();

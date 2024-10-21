@@ -1,13 +1,13 @@
 import { createClient } from "@/utils/supabase/server";
 
-export const getAllAppointmentsDashboard = async (page = 1, pageSize = 10) => {
-    const supabase = await createClient();
+export const getAllReservations = async (page = 1, pageSize = 10) => {
+    const supabase = createClient();
 
     const start = (page - 1) * pageSize;
     const end = start + pageSize - 1;
 
     const { data, error, count } = await supabase
-        .from("appointments")
+        .from("reservations")
         .select("*", { count: "exact" })
         .range(start, end)
         .order("date", { ascending: true });

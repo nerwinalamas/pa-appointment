@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { useAccountModal } from "@/hooks/useAccountModal";
 import { AlertCircle } from "lucide-react";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { deleteAccount } from "@/app/(dashboard)/account/action";
 import { useRouter } from "next/navigation";
 
