@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { formatDate } from "@/app/appointment/_lib/utils";
-import PageHandler from "@/components/shared/page-handler";
 import { getAllReservations } from "../service";
+import { formatDate } from "../../appointments/_lib";
+import PageHandler from "@/components/shared/page-handler";
 import {
     Table,
     TableBody,

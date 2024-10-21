@@ -1,8 +1,7 @@
 import { FormEvent } from "react";
 import { deleteAppointment } from "@/app/(dashboard)/appointments/action";
-import { formatDate } from "@/app/appointment/_lib/utils";
+import { formatDate } from "@/app/(dashboard)/appointments/_lib";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
-
 import {
     Dialog,
     DialogContent,
@@ -12,9 +11,9 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import toast from "react-hot-toast";
 
 const DeleteAppointment = () => {
     const { isOpen, onClose, type, data } = useAppointmentModal();

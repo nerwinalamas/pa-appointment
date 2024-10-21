@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
-
+import { AppointmentProps } from "../_types";
+import { formatDate } from "../_lib";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { FileCheck } from "lucide-react";
-import { AppointmentProps } from "../_types";
-import { formatDate } from "@/app/appointment/_lib/utils";
 
 const AppointmentTableRow = ({
     appointment,
