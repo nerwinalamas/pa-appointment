@@ -14,7 +14,7 @@ const DashboardTotalBookings = async () => {
             <DashboardTotalBookingsChart count={count as number} />
             <div className="flex flex-col items-center justify-center gap-2 text-sm">
                 <h3 className="flex items-center gap-2 font-medium leading-none">
-                    Total bookings up by 5.2% overall{" "}
+                    Total bookings
                     <TrendingUp className="h-4 w-4" />
                 </h3>
                 <p className="leading-none text-muted-foreground">
