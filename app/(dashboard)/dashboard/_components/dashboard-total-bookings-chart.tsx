@@ -1,8 +1,8 @@
 "use client";
 
 import { chartConfig } from "../_lib/chartConfig";
-import { chartData2 } from "../_lib/constant";
-
+import { chartData2, TARGET_BOOKINGS } from "../_lib/constant";
+import { ChartContainer } from "@/components/ui/chart";
 import {
     Label,
     PolarGrid,
@@ -10,7 +10,6 @@ import {
     RadialBar,
     RadialBarChart,
 } from "recharts";
-import { ChartContainer } from "@/components/ui/chart";
 
 const DashboardTotalBookingsChart = ({ count }: { count: number }) => {
     return (
@@ -20,8 +19,8 @@ const DashboardTotalBookingsChart = ({ count }: { count: number }) => {
         >
             <RadialBarChart
                 data={chartData2}
-                startAngle={0}
-                endAngle={250}
+                startAngle={count}
+                endAngle={TARGET_BOOKINGS}
                 innerRadius={80}
                 outerRadius={110}
             >
