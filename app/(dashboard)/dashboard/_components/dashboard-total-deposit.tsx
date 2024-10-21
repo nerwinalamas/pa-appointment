@@ -1,5 +1,6 @@
 import { DEPOSIT_AMOUNT } from "../_lib/constant";
 import { getCurrentMonthAppointments } from "../service";
+import { DollarSign } from "lucide-react";
 
 const DashboardTotalDeposit = async () => {
     const { count, error } = await getCurrentMonthAppointments();
@@ -9,12 +10,17 @@ const DashboardTotalDeposit = async () => {
     }
 
     return (
-        <div className="flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 xl:row-start-2">
-            <h2 className="text-base font-light">Total Deposit</h2>
-            <p className="text-2xl font-bold">
-                {(count as number) * DEPOSIT_AMOUNT}
-            </p>
-            <p className="text-xs text-slate-700">for this month</p>
+        <div className="flex flex-col justify-between gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 xl:row-start-2">
+            <div className="flex justify-between items-center">
+                <h2 className="text-base font-light">Total Deposit</h2>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <div>
+                <p className="text-3xl font-bold">
+                    {(count as number) * DEPOSIT_AMOUNT}
+                </p>
+                <p className="text-xs text-muted-foreground">for this month</p>
+            </div>
         </div>
     );
 };
