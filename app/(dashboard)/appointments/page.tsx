@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { getAllAppointmentsDashboard, isLoggedIn } from "./service";
-import { formatDate } from "@/app/appointment/_lib/utils";
+import { getAllReservations, isLoggedIn } from "./service";
 import PageHandler from "@/components/shared/page-handler";
 import AppointmentButton from "./_components/appointment-button";
 import AppointmentTableRow from "./_components/appointment-table-row";
@@ -25,10 +24,7 @@ const Appointments = async ({
     const page = parseInt(searchParams.page) || 1;
     const pageSize = 8;
 
-    const { data, error, count } = await getAllAppointmentsDashboard(
-        page,
-        pageSize
-    );
+    const { data, error, count } = await getAllReservations(page, pageSize);
 
     if (error) {
         return <h1>Error appointment dashboard</h1>;
@@ -50,17 +46,18 @@ const Appointments = async ({
             </div>
             <Table className="grid gap-3 p-4 xl:gap-0">
                 <TableHeader className="hidden xl:grid">
-                    <TableRow className="xl:grid xl:grid-cols-7">
+                    <TableRow className="xl:grid xl:grid-cols-11">
                         <TableHead className="xl:col-span-2">Date</TableHead>
-                        <TableHead className="text-center">
-                            Available slots
+                        <TableHead className="text-center xl:col-span-2">
+                            Time slots
                         </TableHead>
-                        <TableHead className="text-center">
-                            Booked slots
+                        <TableHead className="text-center xl:col-span-2">
+                            Name
                         </TableHead>
-                        <TableHead className="text-center">
-                            Total slots
+                        <TableHead className="text-center xl:col-span-2">
+                            Contact Number
                         </TableHead>
+                        <TableHead className="text-center">Deposit</TableHead>
                         <TableHead className="text-center xl:col-span-2">
                             Actions
                         </TableHead>
@@ -75,23 +72,18 @@ const Appointments = async ({
                         </TableRow>
                     ) : (
                         data?.map((appointment) => {
-                            const { dayName, formattedDate } = formatDate(
-                                appointment.date
-                            );
                             return (
                                 <AppointmentTableRow
                                     key={appointment.id}
                                     appointment={appointment}
-                                    formattedDate={formattedDate}
-                                    dayName={dayName}
                                 />
                             );
                         })
                     )}
                 </TableBody>
                 <TableFooter className="grid">
-                    <TableRow className="grid grid-cols-2 xl:grid-cols-7">
-                        <TableCell colSpan={4} className="xl:col-span-5">
+                    <TableRow className="grid grid-cols-2 xl:grid-cols-11">
+                        <TableCell colSpan={4} className="xl:col-span-9">
                             Page {page} of {totalPages}
                         </TableCell>
                         <TableCell className="text-right xl:col-span-2">
@@ -102,10 +94,7 @@ const Appointments = async ({
             </Table>
             {count! > pageSize && (
                 <Suspense fallback={<div>Loading pagination...</div>}>
-                    <PageHandler
-                        currentPage={page}
-                        totalPages={totalPages}
-                    />
+                    <PageHandler currentPage={page} totalPages={totalPages} />
                 </Suspense>
             )}
         </div>

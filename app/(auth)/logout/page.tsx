@@ -19,7 +19,7 @@ const Logout = () => {
             const response = await logout();
             if (response.success) {
                 toast.success("Successfully logged out!");
-                router.replace("/appointment");
+                router.replace("/calendar");
             } else {
                 toast.error(`${response.error}`);
             }

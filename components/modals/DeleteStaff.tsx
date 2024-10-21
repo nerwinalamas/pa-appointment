@@ -1,5 +1,4 @@
 import { FormEvent } from "react";
-
 import {
     Dialog,
     DialogContent,
@@ -9,9 +8,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useStaffModal } from "@/hooks/useStaffModal";
+import toast from "react-hot-toast";
+import { deleteStaff } from "@/app/(dashboard)/staff/action";
+import { Staff } from "@/app/(dashboard)/staff/_types";
 
 const DeleteStaff = () => {
-    const { isOpen, onClose, type } = useStaffModal();
+    const { isOpen, onClose, type, data } = useStaffModal();
     const isModalOpen = isOpen && type === "deleteStaff";
 
     const handleDialogChange = () => {
@@ -21,16 +23,20 @@ const DeleteStaff = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        if (!data) return;
+        const staffData = data as Staff;
+
         try {
-            // const response = await 
-            // if (response.success) {
-            //     toast.success("Delete staff successfully");
-            //     onClose();
-            // } else {
-            //     toast.error(`${response.error}`);
-            // }
+            const response = await deleteStaff(staffData.id as string);
+            if (response.success) {
+                toast.success("Staff deleted successfully.");
+            } else {
+                toast.error(`${response.error}`);
+            }
         } catch (error) {
             console.log("Error deleting staff: ", error);
+        } finally {
+            onClose();
         }
     };
 
