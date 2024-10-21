@@ -1,4 +1,5 @@
 export const DEPOSIT_AMOUNT = 10;
+export const SLOTS = 8;
 
 export const chartData = [
     { month: "January", booking: 186, availableSlots: 80 },
