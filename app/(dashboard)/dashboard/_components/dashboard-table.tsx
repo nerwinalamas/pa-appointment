@@ -34,8 +34,8 @@ const DashboardTable = async ({
     const totalPages = Math.ceil((count as number) / pageSize);
 
     return (
-        <div className="flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 row-span-2 md:col-span-2 xl:col-span-3">
-            <Table className="p-4">
+        <div className="overflow-x-auto row-span-2 flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 md:col-span-2 md:row-span-2 xl:col-span-3">
+            <Table className="p-4 w-[750px] md:w-full">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Date</TableHead>
