@@ -1,9 +1,8 @@
 import { Suspense } from "react";
-import { getAllBookingsWithAppointmentDate } from "../service";
+import Link from "next/link";
 import { formatDate } from "@/app/appointment/_lib/utils";
-import { formatTime } from "@/app/appointment/[appointmentDateId]/_lib/utils";
 import PageHandler from "@/components/shared/page-handler";
-
+import { getAllReservations } from "../service";
 import {
     Table,
     TableBody,
@@ -12,9 +11,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { ExternalLink } from "lucide-react";
+import { FileCheck } from "lucide-react";
 
-const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }) => {
+const DashboardTable = async ({
+    searchParamsPage,
+}: {
+    searchParamsPage: string;
+}) => {
     const page = parseInt(searchParamsPage) || 1;
     const pageSize = 6;
 
@@ -22,13 +25,13 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
         data: bookings,
         error,
         count,
-    } = await getAllBookingsWithAppointmentDate(page, pageSize);
+    } = await getAllReservations(page, pageSize);
 
     if (error) {
-        return <h1>Error par</h1>;
+        return <h2>Error par</h2>;
     }
 
-    const totalPages = Math.ceil(count! / pageSize);
+    const totalPages = Math.ceil((count as number) / pageSize);
 
     return (
         <div className="flex flex-col gap-1 p-4 rounded-md bg-slate-100 dark:bg-slate-950 row-span-2 md:col-span-2 xl:col-span-3">
@@ -41,28 +44,23 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
                         <TableHead className="text-center">
                             Contact Number
                         </TableHead>
-                        <TableHead className="text-center">
-                            Deposit Screenshot
-                        </TableHead>
+                        <TableHead className="text-center">Deposit</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {bookings?.map((booking) => {
                         const { dayName, formattedDate } = formatDate(
-                            booking.appointments.date
+                            booking.date
                         );
-                        const formattedStartTime = formatTime(
-                            booking.start_time
-                        );
-                        const formattedEndTime = formatTime(booking.end_time);
-                        
+                        const timeSlots = JSON.parse(booking.time_slots);
+
                         return (
                             <TableRow key={booking.id}>
                                 <TableCell>
                                     {formattedDate} - {dayName}
                                 </TableCell>
                                 <TableCell className="text-center">
-                                    {formattedStartTime} - {formattedEndTime}
+                                    {timeSlots.start} - {timeSlots.end}
                                 </TableCell>
                                 <TableCell className="text-center capitalize">
                                     {booking.name}
@@ -70,17 +68,16 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
                                 <TableCell className="text-center">
                                     {booking.contact_number}
                                 </TableCell>
-                                <TableCell>
-                                    <a
-                                        href={booking.deposit_screenshot}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <ExternalLink
-                                            size={18}
-                                            className="mx-auto"
-                                        />
-                                    </a>
+                                <TableCell className="flex items-start justify-center">
+                                    {booking.deposit_screenshots && (
+                                        <Link
+                                            href={booking.deposit_screenshots}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FileCheck className="h-5 w-5 text-green-500" />
+                                        </Link>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         );
@@ -89,10 +86,7 @@ const DashboardTable = async ({ searchParamsPage }: { searchParamsPage: string }
             </Table>
             {count! > pageSize && (
                 <Suspense fallback={<div>Loading pagination...</div>}>
-                    <PageHandler
-                        currentPage={page}
-                        totalPages={totalPages}
-                    />
+                    <PageHandler currentPage={page} totalPages={totalPages} />
                 </Suspense>
             )}
         </div>
