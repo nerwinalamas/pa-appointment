@@ -26,7 +26,7 @@ const AppointmentTableRow = ({
                 {formattedDate} - {dayName}
             </TableCell>
             <TableCell className="xl:text-center xl:col-span-2">
-                {timeSlots.start} to {timeSlots.end}
+                {timeSlots.start} - {timeSlots.end}
             </TableCell>
             <TableCell className="capitalize xl:text-center xl:col-span-2">
                 {appointment.name}
