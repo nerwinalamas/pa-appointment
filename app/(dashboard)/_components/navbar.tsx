@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
 import Logout from "@/app/(auth)/logout/page";
+import { SIDEBAR_ITEMS } from "../_lib/constants";
 import ToggleThemeButton from "@/components/shared/toggle-theme-button";
 
 import {
@@ -13,7 +14,6 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { items } from "../_lib/constants";
 
 const Navbar = () => {
     const [openSheet, setOpenSheet] = useState(false);
@@ -33,7 +33,7 @@ const Navbar = () => {
                             <SheetTitle>Logo</SheetTitle>
                         </SheetHeader>
                         <div className="my-5 flex flex-col items-center justify-start gap-2 text-slate-900 dark:text-slate-50">
-                            {items.map((item) => (
+                            {SIDEBAR_ITEMS.map((item) => (
                                 <Link
                                     href={item.url}
                                     key={item.id}

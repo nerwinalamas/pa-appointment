@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { items } from "../_lib/constants";
+import { SIDEBAR_ITEMS } from "../_lib/constants";
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -13,7 +13,7 @@ const Sidebar = () => {
                 <h1 className="text-xl text-center font-semibold">Logo</h1>
             </Link>
             <div className="flex flex-col gap-3">
-                {items.map((item) => (
+                {SIDEBAR_ITEMS.map((item) => (
                     <Link
                         key={item.id}
                         href={item.url}
