@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { downloadAppointments } from "../download-action";
+import { downloadData } from "../download-action";
 import { months } from "../_lib/constants";
 
 import {
@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import toast from "react-hot-toast";
+import { Parser } from "json2csv";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -27,27 +28,39 @@ const AppointmentDownload = () => {
         setCheckedStates((prev) => ({ ...prev, [month]: checked }));
     };
 
-    const handleSubmit = async () => {
-        try {
-            const response = await downloadAppointments();
-            if (response.success) {
-                toast.success("Download appointment successfully!");
+    const handleDownload = async () => {
+        const response = await downloadData();
+    
+        if (response.success) {
+            if (Array.isArray(response.data)) {
+                const json2csvParser = new Parser();
+                const csv = json2csvParser.parse(response.data);
+                const blob = new Blob([csv], { type: "text/csv" });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "data.csv";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
             } else {
-                console.error("Error downloading reports: ", response.error);
-                toast.error(`${response.error}`);
+                toast.error("No data available to download.");
             }
-        } catch (error) {
-            console.error("Failed to download reports: ", error);
-            toast.error("Failed to download reports");
-        } finally {
-            setOpen(false);
+        } else {
+            toast.error("Download failed.");
         }
     };
 
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="hover:bg-slate-200 focus:bg-slate-200 dark:hover:bg-slate-700 dark:focus:bg-slate-700">Download</Button>
+                <Button
+                    variant="secondary"
+                    className="hover:bg-slate-200 focus:bg-slate-200 dark:hover:bg-slate-700 dark:focus:bg-slate-700"
+                >
+                    Download
+                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-64">
                 <div className="p-2 grid grid-cols-2 gap-3">
@@ -67,7 +80,7 @@ const AppointmentDownload = () => {
                 <Button
                     variant="secondary"
                     className="w-full hover:bg-slate-200 focus:bg-slate-200 dark:hover:bg-slate-700 dark:focus:bg-slate-700"
-                    onClick={handleSubmit}
+                    onClick={handleDownload}
                 >
                     Download
                 </Button>
