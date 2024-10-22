@@ -15,6 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { PAGE_SIZE } from "../_lib/constants";
 
 const Appointments = async ({
     searchParams,
@@ -22,15 +23,14 @@ const Appointments = async ({
     searchParams: { page: string };
 }) => {
     const page = parseInt(searchParams.page) || 1;
-    const pageSize = 8;
 
-    const { data, error, count } = await getAllReservations(page, pageSize);
+    const { data, error, count } = await getAllReservations(page, PAGE_SIZE.APPOINTMENTS);
 
     if (error) {
         return <h1>Error appointment dashboard</h1>;
     }
 
-    const totalPages = Math.ceil(count! / pageSize);
+    const totalPages = Math.ceil(count! / PAGE_SIZE.APPOINTMENTS);
 
     const { session } = await isLoggedIn();
 
@@ -92,8 +92,8 @@ const Appointments = async ({
                     </TableRow>
                 </TableFooter>
             </Table>
-            {count! > pageSize && (
-                <Suspense fallback={<div>Loading pagination...</div>}>
+            {count! > PAGE_SIZE.APPOINTMENTS && (
+                <Suspense fallback={<div>Loading ...</div>}>
                     <PageHandler currentPage={page} totalPages={totalPages} />
                 </Suspense>
             )}
