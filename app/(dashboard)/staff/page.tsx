@@ -1,6 +1,5 @@
-// import { Suspense } from "react";
-// import PageHandler from "@/components/shared/page-handler";
-import { createClient } from "@/utils/supabase/server";
+import { Suspense } from "react";
+import PageHandler from "@/components/shared/page-handler";
 import StaffCreateButton from "./_components/staff-create-button";
 import StaffTableRow from "./_components/staff-table-row";
 
@@ -12,15 +11,23 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { getAllStaff } from "./service";
+import { PAGE_SIZE } from "../_lib/constants";
 
-const Staff = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase.from("staff").select("*");
+const Staff = async ({
+    searchParams,
+}: {
+    searchParams: { page: string };
+}) => {
+    const page = parseInt(searchParams.page) || 1;
+
+    const { data, error, count } = await getAllStaff(page, PAGE_SIZE.STAFF);
 
     if (error) {
-        console.log("Error fetching staff: ", error.message);
-        return <h1>Error: {error.message}</h1>;
+        return <h2>Error par</h2>;
     }
+
+    const totalPages = Math.ceil(count! / PAGE_SIZE.STAFF);
 
     return (
         <div className="flex flex-col items-end gap-2 pt-5 pb-20 lg:pb-12 lg:gap-0 lg:mx-auto xl:m-4 xl:p-4 bg-slate-100 dark:bg-slate-950">
@@ -56,11 +63,11 @@ const Staff = async () => {
                     )}
                 </TableBody>
             </Table>
-            {/* {count! > pageSize && (
-                <Suspense fallback={<div>Loading pagination...</div>}>
+            {count! > PAGE_SIZE.STAFF && (
+                <Suspense fallback={<div>Loading ...</div>}>
                     <PageHandler currentPage={page} totalPages={totalPages} />
                 </Suspense>
-            )} */}
+            )}
         </div>
     );
 };
