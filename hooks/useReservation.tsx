@@ -1,15 +1,11 @@
+import { HoursTableRow } from "@/app/(dashboard)/availability/_components/availability-hours-table-row";
 import { create } from "zustand";
-
-type TimeSlot = {
-    start: string;
-    end: string;
-};
 
 type ReservationStore = {
     selectedDate: Date | null;
     setSelectedDate: (date: Date | null) => void;
-    selectedTimeSlot: TimeSlot | null;
-    setSelectedTimeSlot: (slot: TimeSlot | null) => void;
+    selectedTimeSlot: HoursTableRow | null;
+    setSelectedTimeSlot: (slot: HoursTableRow | null) => void;
     name: string;
     setName: (name: string) => void;
     contactNumber: string;
@@ -21,7 +17,7 @@ type ReservationStore = {
 };
 
 export const useReservation = create<ReservationStore>((set) => ({
-    selectedDate: new Date(),
+    selectedDate: null,
     setSelectedDate: (date) => set({ selectedDate: date }),
     selectedTimeSlot: null,
     setSelectedTimeSlot: (slot) => set({ selectedTimeSlot: slot }),
