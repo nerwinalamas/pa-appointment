@@ -23,13 +23,11 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { User } from "@/app/(dashboard)/account/_types";
-import { createClient } from "@/utils/supabase/client";
 import toast from "react-hot-toast";
 import { createStaff } from "@/app/(dashboard)/staff/action";
+import { getAllUsers } from "@/app/(dashboard)/staff/serviceClient";
 
 const AddStaff = () => {
-    const supabase = createClient();
-
     const { isOpen, onClose, type } = useStaffModal();
     const isModalOpen = isOpen && type === "addStaff";
 
@@ -39,18 +37,37 @@ const AddStaff = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        const getUsers = async () => {
-            const { data, error } = await supabase.from("users").select("*");
+        let isMounted = true;
 
-            if (error) {
-                console.log("Error fetching users: ", error.message);
+        const getUsers = async () => {
+            const response = await getAllUsers();
+
+            if (response.error) {
+                console.log("Error fetching users: ", response.error);
             } else {
-                setUsers(data);
-                setFilteredUsers(data);
+                if (Array.isArray(response.data)) {
+                    if (isMounted) {
+                        setUsers(response.data);
+                        setFilteredUsers(response.data);
+                    }
+                } else {
+                    if (isMounted) {
+                        console.log("No users found or data is not an array.");
+                        setUsers([]);
+                        setFilteredUsers([]);
+                    }
+                }
             }
         };
-        getUsers();
-    }, [supabase, isModalOpen]);
+
+        if (isModalOpen) {
+            getUsers();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [isModalOpen]);
 
     useEffect(() => {
         const filtered = users.filter((user) =>

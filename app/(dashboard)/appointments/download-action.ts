@@ -1,34 +1,15 @@
-import { createClient } from '@/utils/supabase/client';
-import * as XLSX from 'xlsx';
+"use server";
 
-// TODO: NOT FINAL
-export const downloadAppointments = async () => {
-    const supabase = await createClient();
+import { createClient } from "@/utils/supabase/server";
 
-    const { data, error } = await supabase
-        .from("reservations")
-        .select("*")
-        .order("date", { ascending: true })
-        .csv();
+export const downloadData = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.from("reservations").select("*");
 
     if (error) {
+        console.error("Error downloading data:", error);
         return { success: false, error: error.message };
     }
 
-    const csvData = data;
-    const workbook = XLSX.read(csvData, { type: "string" });
-    const excelBuffer = XLSX.write(workbook, {
-        bookType: "xlsx",
-        type: "buffer",
-    });
-
-    return {
-        success: true,
-        data: excelBuffer,
-        headers: {
-            "Content-Type":
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "Content-Disposition": 'attachment; filename="appointments.xlsx"',
-        },
-    };
+    return { success: true, data };
 };

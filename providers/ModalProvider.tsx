@@ -7,6 +7,8 @@ import AddStaff from "@/components/modals/AddStaff";
 import UpdateStaff from "@/components/modals/UpdateStaff";
 import DeleteStaff from "@/components/modals/DeleteStaff";
 import DeleteAccount from "@/components/modals/DeleteAccount";
+import CreateUnavailableDate from "@/components/modals/CreateUnavailableDate";
+import CreateTimeSlot from "@/components/modals/CreateTimeSlot";
 
 const ModalProvider = () => {
     return (
@@ -20,6 +22,10 @@ const ModalProvider = () => {
             <DeleteStaff />
 
             <DeleteAccount />
+
+            <CreateUnavailableDate />
+
+            <CreateTimeSlot />
         </>
     );
 };

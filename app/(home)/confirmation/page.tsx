@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useReservation } from "@/hooks/useReservation";
+import { formatTime } from "../time-slots/_lib";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -10,7 +12,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useReservation } from "@/hooks/useReservation";
 import { FileCheck } from "lucide-react";
 import { format } from "date-fns";
 
@@ -41,19 +42,28 @@ const Confirmation = () => {
                         <div className="grid grid-cols-2 gap-2 text-sm">
                             <div className="font-semibold">Date:</div>
                             <div>
-                                {format(selectedDate as Date, "MMMM dd, yyyy")}
+                                {selectedDate
+                                    ? format(
+                                          selectedDate as Date,
+                                          "MMMM dd, yyyy"
+                                      )
+                                    : ""}
                             </div>
                             <div className="font-semibold">Time:</div>
                             <div>
-                                {selectedTimeSlot?.start} to{" "}
-                                {selectedTimeSlot?.end}
+                                {selectedTimeSlot
+                                    ? `${formatTime(
+                                          selectedTimeSlot.start_time
+                                      )} to
+                                ${formatTime(selectedTimeSlot.end_time)}`
+                                    : ""}
                             </div>
                             <div className="font-semibold">Name:</div>
                             <div className="capitalize">{name}</div>
                             <div className="font-semibold">Contact number:</div>
                             <div>{contactNumber}</div>
                             <div className="font-semibold">Deposit:</div>
-                            <div>P10.00</div>
+                            <div>{name && `P10.00`}</div>
                             <div className="font-semibold">
                                 Payment Screenshot:
                             </div>
