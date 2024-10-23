@@ -7,6 +7,7 @@ import { userSchema } from "../_lib/schema";
 import { reserveTimeSlot } from "../action";
 import { ErrorMessage } from "../_types";
 import ReservationPaymentMethod from "./reservation-payment-method";
+import { formatTime } from "../../time-slots/_lib";
 import { CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -24,7 +25,7 @@ const ReservationContent = () => {
         setContactNumber,
         depositScreenshot,
         setDepositScreenshot,
-        setDepositScreenshotLink
+        setDepositScreenshotLink,
     } = useReservation();
 
     const [error, setError] = useState<ErrorMessage>({});
@@ -66,14 +67,18 @@ const ReservationContent = () => {
                 formData.append("date", format(selectedDate, "MMMM dd, yyyy"));
             }
             if (selectedTimeSlot) {
-                const timeSlotsArray = Array.isArray(selectedTimeSlot) ? selectedTimeSlot : [selectedTimeSlot];
+                const timeSlotsArray = Array.isArray(selectedTimeSlot)
+                    ? selectedTimeSlot
+                    : [selectedTimeSlot];
                 formData.append("timeSlots", JSON.stringify(timeSlotsArray));
             }
 
             const response = await reserveTimeSlot(formData);
             if (response.success) {
                 toast.success("appointment created successfully.");
-                setDepositScreenshotLink(response.data?.[0].deposit_screenshots)
+                setDepositScreenshotLink(
+                    response.data?.[0].deposit_screenshots
+                );
                 router.replace("/confirmation");
             } else {
                 toast.error(`${response.error}`);
@@ -101,7 +106,8 @@ const ReservationContent = () => {
                 {selectedDate
                     ? format(selectedDate, "MMMM dd, yyyy")
                     : "the selected date"}
-                , from {selectedTimeSlot?.start} to {selectedTimeSlot?.end} (
+                , from {formatTime(selectedTimeSlot?.start_time as string)} to{" "}
+                {formatTime(selectedTimeSlot?.end_time as string)} (
                 {selectedDate
                     ? format(selectedDate, "EEEE")
                     : "the selected day"}
