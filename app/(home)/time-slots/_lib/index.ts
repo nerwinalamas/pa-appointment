@@ -1,4 +1,6 @@
 export const formatTime = (timeString: string) => {
+    if (!timeString) return "Invalid time";
+    
     const [hours, minutes] = timeString.split(":");
     let hour = parseInt(hours, 10);
     const ampm = hour >= 12 ? "PM" : "AM";
