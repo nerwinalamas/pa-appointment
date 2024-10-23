@@ -10,6 +10,11 @@ export const SIDEBAR_ITEMS = [
         url: "/appointments",
     },
     {
+        id: "Availability",
+        name: "Availability",
+        url: "/availability",
+    },
+    {
         id: "Staff",
         name: "Staff",
         url: "/staff",
