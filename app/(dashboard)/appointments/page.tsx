@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getAllReservations, isLoggedIn } from "./service";
+import { PAGE_SIZE } from "../_lib/constants";
 import PageHandler from "@/components/shared/page-handler";
 import AppointmentButton from "./_components/appointment-button";
 import AppointmentTableRow from "./_components/appointment-table-row";
 import AppointmentDownload from "./_components/appointment-download";
-
+import AppointmentError from "./_components/appointment-error";
 import {
     Table,
     TableBody,
@@ -15,7 +16,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { PAGE_SIZE } from "../_lib/constants";
 
 const Appointments = async ({
     searchParams,
@@ -27,7 +27,8 @@ const Appointments = async ({
     const { data, error, count } = await getAllReservations(page, PAGE_SIZE.APPOINTMENTS);
 
     if (error) {
-        return <h1>Error appointment dashboard</h1>;
+        console.log("Error in Appointments Table: ", error);
+        return <AppointmentError name="Appointments Table" />;
     }
 
     const totalPages = Math.ceil(count! / PAGE_SIZE.APPOINTMENTS);
