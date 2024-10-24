@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatTime } from "@/app/(home)/time-slots/_lib";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
 import { AppointmentProps } from "../_types";
 import { formatDate } from "../_lib";
@@ -20,12 +21,13 @@ const AppointmentTableRow = ({
         : "";
 
     return (
-        <TableRow className="grid xl:grid-cols-11">
-            <TableCell className="xl:col-span-2">
+        <TableRow className="grid xl:grid-cols-12">
+            <TableCell className="xl:col-span-3">
                 {formattedDate} - {dayName}
             </TableCell>
             <TableCell className="xl:text-center xl:col-span-2">
-                {timeSlots.start} - {timeSlots.end}
+                {formatTime(timeSlots.start_time)} -{" "}
+                {formatTime(timeSlots.end_time)}
             </TableCell>
             <TableCell className="capitalize xl:text-center xl:col-span-2">
                 {appointment.name}
@@ -33,7 +35,7 @@ const AppointmentTableRow = ({
             <TableCell className="xl:text-center xl:col-span-2">
                 {appointment.contact_number}
             </TableCell>
-            <TableCell className="flex items-start justify-center">
+            <TableCell className="xl:flex xl:items-start xl:justify-center">
                 {appointment.deposit_screenshots && (
                     <Link
                         href={appointment.deposit_screenshots}

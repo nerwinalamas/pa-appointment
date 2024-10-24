@@ -1,12 +1,14 @@
 import { DEPOSIT_AMOUNT } from "../_lib/constant";
 import { getCurrentMonthAppointments } from "../service";
+import DashboardError from "./dashboard-error";
 import { DollarSign } from "lucide-react";
 
 const DashboardTotalDeposit = async () => {
     const { count, error } = await getCurrentMonthAppointments();
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Total Deposit: ", error);
+        return <DashboardError name="Total Deposit" className="xl:row-start-2" />;
     }
 
     return (

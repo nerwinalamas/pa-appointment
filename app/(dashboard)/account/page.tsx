@@ -5,6 +5,7 @@ import AccountSettingsAccountInformation from "./_components/account-settings-ac
 import AccountSettingsChangePassword from "./_components/account-settings-change-password";
 import AccountSettingsChangeEmail from "./_components/account-settings-change-email";
 import AccountSettingsDeleteAccount from "./_components/account-settings-delete-account";
+import AccountError from "./_components/account-error";
 
 const Account = async () => {
     const { data: authData, error: authError } = await useAuth();
@@ -21,7 +22,8 @@ const Account = async () => {
     const { data: userData, error: userError } = await getUser(userId);
 
     if (userError) {
-        return <h1>Error par</h1>;
+        console.log("Error in Account Settings: ", userError);
+        return <AccountError />;
     }
 
     return (

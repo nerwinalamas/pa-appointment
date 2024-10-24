@@ -1,4 +1,5 @@
 import { getAllMonths } from "../service";
+import AvailabilityError from "./availability-error";
 import AvailabilityMonthsCard from "./availability-months-card";
 import {
     Card,
@@ -12,7 +13,8 @@ const AvailabilityMonths = async () => {
     const { data, error } = await getAllMonths();
 
     if (error) {
-        return <h1>Error</h1>;
+        console.log("Error in Unavailable Months: ", error);
+        return <AvailabilityError name="Unavailable Months" className="h-44" />;
     }
 
     return (

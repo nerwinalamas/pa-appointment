@@ -15,6 +15,11 @@ export const SIDEBAR_ITEMS = [
         url: "/availability",
     },
     {
+        id: "Payment",
+        name: "Payment",
+        url: "/payment",
+    },
+    {
         id: "Staff",
         name: "Staff",
         url: "/staff",

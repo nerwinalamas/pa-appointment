@@ -1,12 +1,14 @@
 import DashboardSlotAreaChart from "./dashboard-slot-area-chart";
 import { getLastSixMonthsAppointments } from "../service";
 import { processReservationsData, Reservation } from "../_lib";
+import DashboardError from "./dashboard-error";
 
 const DashboardSlotPerMonth = async () => {
     const { data, error } = await getLastSixMonthsAppointments();
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Total Bookings Chart: ", error);
+        return <DashboardError name="Total Bookings Chart" className="row-span-2 md:col-span-2" />;
     }
 
     const chartData = processReservationsData(data as Reservation[]);

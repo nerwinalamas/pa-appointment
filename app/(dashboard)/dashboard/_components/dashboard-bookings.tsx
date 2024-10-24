@@ -1,11 +1,13 @@
 import { getTodaysAppointment } from "../service";
+import DashboardError from "./dashboard-error";
 import { CalendarDays } from "lucide-react";
 
 const DashboardBookings = async () => {
     const { count, error } = await getTodaysAppointment();
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Bookings: ", error);
+        return <DashboardError name="Bookings" />;
     }
 
     return (

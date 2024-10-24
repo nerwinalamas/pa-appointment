@@ -1,4 +1,5 @@
 import { getAllHolidays } from "../service";
+import AvailabilityError from "./availability-error";
 import AvailabilityHolidaysCard from "./availability-holidays-card";
 import AvailabilityHolidaysForm from "./availability-holidays-form";
 import {
@@ -13,7 +14,8 @@ const AvailabilityHolidays = async () => {
     const { data, error } = await getAllHolidays();
 
     if (error) {
-        return <h1>Error</h1>;
+        console.log("Error in Holidays: ", error);
+        return <AvailabilityError name="Holidays" className="h-72" />;
     }
 
     return (

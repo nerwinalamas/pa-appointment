@@ -10,8 +10,9 @@ export type AppointmentProps = {
 };
 
 export type TimeSlot = {
-    start: string;
-    end: string;
+    id: string;
+    start_time: string;
+    end_time: string;
 };
 
 export type ErrorMessage = {
@@ -19,4 +20,12 @@ export type ErrorMessage = {
     timeSlots?: string;
     name?: string;
     contactNumber?: string;
+};
+
+export type AvailableTimeSlots = {
+    id: string;
+    start_time: string;
+    end_time: string;
+    created_at: string;
+    updated_at: string;
 };

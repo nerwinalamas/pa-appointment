@@ -12,18 +12,22 @@ const TimeSlotsTableTow = ({ id, start_time, end_time }: HoursTableRow) => {
 
     const handleSlotSelection = (timeSlot: HoursTableRow) => {
         setSelectedTimeSlot(timeSlot);
-        router.push(
-            `/reservation?start=${timeSlot.start_time}&end=${timeSlot.end_time}`
-        );
+        router.push(`/reservation?start=${timeSlot.start_time}&end=${timeSlot.end_time}`);
     };
 
     return (
         <TableRow
-            onClick={() => handleSlotSelection({ id, start_time, end_time })}
+            onClick={() =>
+                handleSlotSelection({ id, start_time, end_time })
+            }
             className="cursor-pointer hover:bg-slate-200"
         >
-            <TableCell className="text-center">{formatTime(start_time)}</TableCell>
-            <TableCell className="text-center">{formatTime(end_time)}</TableCell>
+            <TableCell className="text-center">
+                {formatTime(start_time)}
+            </TableCell>
+            <TableCell className="text-center">
+                {formatTime(end_time)}
+            </TableCell>
         </TableRow>
     );
 };

@@ -1,5 +1,6 @@
 import { getAllDays } from "../service";
 import AvailabilityDaysCard from "./availability-days-card";
+import AvailabilityError from "./availability-error";
 import {
     Card,
     CardContent,
@@ -12,7 +13,8 @@ const AvailabilityDays = async () => {
     const { data, error } = await getAllDays();
 
     if (error) {
-        return <h1>Error</h1>;
+        console.log("Error in Unavailable Days: ", error);
+        return <AvailabilityError name="Unavailable Days" />;
     }
 
     return (

@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getAllReservations, isLoggedIn } from "./service";
+import { PAGE_SIZE } from "../_lib/constants";
 import PageHandler from "@/components/shared/page-handler";
 import AppointmentButton from "./_components/appointment-button";
 import AppointmentTableRow from "./_components/appointment-table-row";
 import AppointmentDownload from "./_components/appointment-download";
-
+import AppointmentError from "./_components/appointment-error";
 import {
     Table,
     TableBody,
@@ -15,7 +16,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { PAGE_SIZE } from "../_lib/constants";
 
 const Appointments = async ({
     searchParams,
@@ -27,7 +27,8 @@ const Appointments = async ({
     const { data, error, count } = await getAllReservations(page, PAGE_SIZE.APPOINTMENTS);
 
     if (error) {
-        return <h1>Error appointment dashboard</h1>;
+        console.log("Error in Appointments Table: ", error);
+        return <AppointmentError />;
     }
 
     const totalPages = Math.ceil(count! / PAGE_SIZE.APPOINTMENTS);
@@ -46,8 +47,8 @@ const Appointments = async ({
             </div>
             <Table className="grid gap-3 p-4 xl:gap-0">
                 <TableHeader className="hidden xl:grid">
-                    <TableRow className="xl:grid xl:grid-cols-11">
-                        <TableHead className="xl:col-span-2">Date</TableHead>
+                    <TableRow className="xl:grid xl:grid-cols-12">
+                        <TableHead className="xl:col-span-3">Date</TableHead>
                         <TableHead className="text-center xl:col-span-2">
                             Time slots
                         </TableHead>
@@ -82,8 +83,8 @@ const Appointments = async ({
                     )}
                 </TableBody>
                 <TableFooter className="grid">
-                    <TableRow className="grid grid-cols-2 xl:grid-cols-11">
-                        <TableCell colSpan={4} className="xl:col-span-9">
+                    <TableRow className="grid grid-cols-2 xl:grid-cols-12">
+                        <TableCell colSpan={4} className="xl:col-span-10">
                             Page {page} of {totalPages}
                         </TableCell>
                         <TableCell className="text-right xl:col-span-2">

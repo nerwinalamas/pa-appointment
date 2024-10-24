@@ -1,4 +1,5 @@
 import { getAllTimeSlots } from "../service";
+import AvailabilityError from "./availability-error";
 import AvailabilityHoursAddButton from "./availability-hours-add-button";
 import AvailabilityHoursTableRow from "./availability-hours-table-row";
 import {
@@ -20,11 +21,18 @@ const AvailabilityHours = async () => {
     const { data, error } = await getAllTimeSlots();
 
     if (error) {
-        return <h1>Error</h1>;
+        console.log("Error in Daily Availability Hours: ", error);
+        return (
+            <AvailabilityError
+                name="Daily Availability Hours"
+                className="w-full px-3 md:px-6 md:w-96 h-96"
+                card="w-full md:w-max"
+            />
+        );
     }
 
     return (
-        <Card className="w-max relative">
+        <Card className="w-full md:w-max relative">
             <CardHeader>
                 <CardTitle>Daily Availability Hours</CardTitle>
                 <CardDescription>

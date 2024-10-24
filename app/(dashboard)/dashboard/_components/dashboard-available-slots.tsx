@@ -1,12 +1,22 @@
 import { getTodaysAppointment } from "../service";
-import { SLOTS } from "../_lib/constant";
+import { getAllTimeSlots } from "../../availability/service";
+import DashboardError from "./dashboard-error";
 import { Clock } from "lucide-react";
 
 const DashboardAvailableSlots = async () => {
-    const { count, error } = await getTodaysAppointment();
+    const { count: todaysAppointmentCount, error: todaysAppointmentError } =
+        await getTodaysAppointment();
+    const { count: timeSlotsCount, error: timeSlotsError } =
+        await getAllTimeSlots();
 
-    if (error) {
-        return <h2>Error par</h2>;
+    if (todaysAppointmentError) {
+        console.log("Error in Available Slots: ", todaysAppointmentError);
+        return <DashboardError name="Available Slots" />;
+    }
+
+    if (timeSlotsError) {
+        console.log("Error in Available Slots: ", timeSlotsError);
+        return <DashboardError name="Available Slots" />;
     }
 
     return (
@@ -17,7 +27,8 @@ const DashboardAvailableSlots = async () => {
             </div>
             <div>
                 <p className="text-3xl font-bold">
-                    {SLOTS - (count as number)}
+                    {(timeSlotsCount as number) -
+                        (todaysAppointmentCount as number)}
                 </p>
                 <p className="text-xs text-muted-foreground">for today</p>
             </div>
