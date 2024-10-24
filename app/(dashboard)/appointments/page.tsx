@@ -46,8 +46,8 @@ const Appointments = async ({
             </div>
             <Table className="grid gap-3 p-4 xl:gap-0">
                 <TableHeader className="hidden xl:grid">
-                    <TableRow className="xl:grid xl:grid-cols-11">
-                        <TableHead className="xl:col-span-2">Date</TableHead>
+                    <TableRow className="xl:grid xl:grid-cols-12">
+                        <TableHead className="xl:col-span-3">Date</TableHead>
                         <TableHead className="text-center xl:col-span-2">
                             Time slots
                         </TableHead>
@@ -82,8 +82,8 @@ const Appointments = async ({
                     )}
                 </TableBody>
                 <TableFooter className="grid">
-                    <TableRow className="grid grid-cols-2 xl:grid-cols-11">
-                        <TableCell colSpan={4} className="xl:col-span-9">
+                    <TableRow className="grid grid-cols-2 xl:grid-cols-12">
+                        <TableCell colSpan={4} className="xl:col-span-10">
                             Page {page} of {totalPages}
                         </TableCell>
                         <TableCell className="text-right xl:col-span-2">
