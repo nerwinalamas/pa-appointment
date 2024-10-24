@@ -1,12 +1,14 @@
 import { getTodaysAppointment } from "../service";
 import { SLOTS } from "../_lib/constant";
+import DashboardError from "./dashboard-error";
 import { Clock } from "lucide-react";
 
 const DashboardAvailableSlots = async () => {
     const { count, error } = await getTodaysAppointment();
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Available Slots: ", error);
+        return <DashboardError name="Available Slots" />;
     }
 
     return (

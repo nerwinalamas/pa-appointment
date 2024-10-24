@@ -4,6 +4,7 @@ import { getAllReservations } from "../service";
 import { formatDate } from "../../appointments/_lib";
 import { formatTime } from "@/app/(home)/time-slots/_lib";
 import PageHandler from "@/components/shared/page-handler";
+import DashboardError from "./dashboard-error";
 import {
     Table,
     TableBody,
@@ -29,7 +30,8 @@ const DashboardTable = async ({
     } = await getAllReservations(page, pageSize);
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Appointments Table: ", error);
+        return <DashboardError name="Appointments Table" className="row-span-2 md:col-span-2 md:row-span-2 xl:col-span-3" />;
     }
 
     const totalPages = Math.ceil((count as number) / pageSize);

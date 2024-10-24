@@ -1,11 +1,13 @@
 import { getAllStaff } from "../service";
+import DashboardError from "./dashboard-error";
 import { Users } from "lucide-react";
 
 const DashboardTotalStaff = async () => {
     const { count, error } = await getAllStaff();
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Total Staff: ", error);
+        return <DashboardError name="Total Staff" className="xl:row-start-2" />;
     }
 
     return (
