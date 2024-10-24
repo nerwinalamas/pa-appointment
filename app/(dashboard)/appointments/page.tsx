@@ -28,7 +28,7 @@ const Appointments = async ({
 
     if (error) {
         console.log("Error in Appointments Table: ", error);
-        return <AppointmentError name="Appointments Table" />;
+        return <AppointmentError />;
     }
 
     const totalPages = Math.ceil(count! / PAGE_SIZE.APPOINTMENTS);
