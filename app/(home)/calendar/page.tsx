@@ -16,6 +16,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { AlertCircle } from "lucide-react";
 
 const AppointmentCalendar = async () => {
     const { data: days, error: daysError } = await getAllDays();
@@ -26,14 +27,19 @@ const AppointmentCalendar = async () => {
     if (daysError || datesError || holidaysError || monthsError) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Error Loading Data</CardTitle>
-                        <CardDescription>
-                            There was an error loading the appointment data.
-                            Please try again later.
-                        </CardDescription>
-                    </CardHeader>
+                <Card className="w-96 h-96">
+                    <CardContent className="h-full flex flex-col gap-1 items-center justify-center">
+                        <div className="flex flex-col items-center justify-center space-y-4">
+                            <AlertCircle className="h-16 w-16 text-red-500" />
+                            <p className="text-lg font-medium text-center">
+                                Error Loading Data
+                            </p>
+                            <p className="text-sm text-gray-400 text-center">
+                                There was an error loading the appointment data.
+                                Please try again later.
+                            </p>
+                        </div>
+                    </CardContent>
                 </Card>
             </div>
         );
