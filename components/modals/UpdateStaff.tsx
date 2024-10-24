@@ -3,6 +3,7 @@
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -69,9 +70,12 @@ const UpdateStaff = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Update Staff</DialogTitle>
+                    <DialogDescription>
+                        Modify existing staff member information
+                    </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                     <div className="flex flex-col gap-2">

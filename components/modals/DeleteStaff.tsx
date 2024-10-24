@@ -2,6 +2,7 @@ import { FormEvent } from "react";
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -42,9 +43,12 @@ const DeleteStaff = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Delete Staff</DialogTitle>
+                    <DialogDescription>
+                        Confirm staff member removal from the system
+                    </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                     <p>Are you sure you want to delete this staff?</p>
