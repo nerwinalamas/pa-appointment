@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getAllReservations } from "../service";
 import { formatDate } from "../../appointments/_lib";
+import { formatTime } from "@/app/(home)/time-slots/_lib";
 import PageHandler from "@/components/shared/page-handler";
 import {
     Table,
@@ -48,40 +49,51 @@ const DashboardTable = async ({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {bookings?.map((booking) => {
-                        const { dayName, formattedDate } = formatDate(
-                            booking.date
-                        );
-                        const timeSlots = JSON.parse(booking.time_slots);
+                    {bookings && bookings.length > 0 ? (
+                        bookings.map((booking) => {
+                            const { dayName, formattedDate } = formatDate(
+                                booking.date
+                            );
+                            const timeSlots = JSON.parse(booking.time_slots);
 
-                        return (
-                            <TableRow key={booking.id}>
-                                <TableCell>
-                                    {formattedDate} - {dayName}
-                                </TableCell>
-                                <TableCell className="text-center">
-                                    {timeSlots.start} - {timeSlots.end}
-                                </TableCell>
-                                <TableCell className="text-center capitalize">
-                                    {booking.name}
-                                </TableCell>
-                                <TableCell className="text-center">
-                                    {booking.contact_number}
-                                </TableCell>
-                                <TableCell className="flex items-start justify-center">
-                                    {booking.deposit_screenshots && (
-                                        <Link
-                                            href={booking.deposit_screenshots}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            <FileCheck className="h-5 w-5 text-green-500" />
-                                        </Link>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        );
-                    })}
+                            return (
+                                <TableRow key={booking.id}>
+                                    <TableCell>
+                                        {formattedDate} - {dayName}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                        {formatTime(timeSlots.start_time)} -{" "}
+                                        {formatTime(timeSlots.end_time)}
+                                    </TableCell>
+                                    <TableCell className="text-center capitalize">
+                                        {booking.name}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                        {booking.contact_number}
+                                    </TableCell>
+                                    <TableCell className="flex items-start justify-center">
+                                        {booking.deposit_screenshots && (
+                                            <Link
+                                                href={
+                                                    booking.deposit_screenshots
+                                                }
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <FileCheck className="h-5 w-5 text-green-500" />
+                                            </Link>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={5}>
+                                No Appointment Dates Available
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
             {count! > pageSize && (
