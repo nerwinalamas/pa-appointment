@@ -1,14 +1,20 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
-import { ErrorMessage, TimeSlot } from "@/app/(dashboard)/appointments/_types";
-import { TIME_SLOTS } from "@/app/(dashboard)/appointments/_lib/constants";
+import {
+    AvailableTimeSlots,
+    ErrorMessage,
+    TimeSlot,
+} from "@/app/(dashboard)/appointments/_types";
+import { getAllTimeSlots } from "@/app/(dashboard)/appointments/serviceClient";
 import { reserveTimeSlot } from "@/app/(home)/reservation/action";
+import { formatTime } from "@/app/(home)/time-slots/_lib";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
 import { cn } from "@/lib/utils";
 
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -37,6 +43,9 @@ const CreateAppointment = () => {
     const { isOpen, onClose, type } = useAppointmentModal();
     const isModalOpen = isOpen && type === "createAppointment";
 
+    const [availableTimeSlots, setAvailableTimeSlots] = useState<
+        AvailableTimeSlots[]
+    >([]);
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [timeSlots, setTimeSlots] = useState<TimeSlot | null>(null);
     const [name, setName] = useState("");
@@ -45,6 +54,39 @@ const CreateAppointment = () => {
         null
     );
     const [error, setError] = useState<ErrorMessage>({});
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const getTimeSlots = async () => {
+            const response = await getAllTimeSlots();
+
+            if (response.error) {
+                console.log("Error fetching time slots: ", response.error);
+            } else {
+                if (Array.isArray(response.data)) {
+                    if (isMounted) {
+                        setAvailableTimeSlots(response.data);
+                    }
+                } else {
+                    if (isMounted) {
+                        console.log(
+                            "No time slots found or data is not an array."
+                        );
+                        setAvailableTimeSlots([]);
+                    }
+                }
+            }
+        };
+
+        if (isModalOpen) {
+            getTimeSlots();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [isModalOpen]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -66,9 +108,15 @@ const CreateAppointment = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        const timeSlotsData = {
+            id: timeSlots?.id,
+            start_time: timeSlots?.start_time,
+            end_time: timeSlots?.end_time,
+        };
+
         const formData = {
             date,
-            timeSlots,
+            timeSlots: timeSlotsData,
             name,
             contactNumber,
             depositScreenshot,
@@ -96,10 +144,10 @@ const CreateAppointment = () => {
             if (date) {
                 formData.append("date", format(date, "MMMM dd, yyyy"));
             }
-            if (timeSlots) {
-                const timeSlotsArray = Array.isArray(timeSlots)
-                    ? timeSlots
-                    : [timeSlots];
+            if (timeSlotsData) {
+                const timeSlotsArray = Array.isArray(timeSlotsData)
+                    ? timeSlotsData
+                    : [timeSlotsData];
                 formData.append("timeSlots", JSON.stringify(timeSlotsArray));
             }
             formData.append("name", name);
@@ -129,9 +177,13 @@ const CreateAppointment = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Create Appointment</DialogTitle>
+                    <DialogDescription>
+                        Schedule your appointment by filling out the details
+                        below
+                    </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                     <Label htmlFor="date" className="cursor-pointer w-max">
@@ -202,14 +254,16 @@ const CreateAppointment = () => {
                             <SelectValue placeholder="Select a time slot" />
                         </SelectTrigger>
                         <SelectContent>
-                            {TIME_SLOTS.map((time, index) => {
+                            {availableTimeSlots.map((time, index) => {
                                 const timeSlotObject = JSON.stringify(time);
                                 return (
                                     <SelectItem
                                         key={index}
                                         value={timeSlotObject}
                                     >
-                                        {`${time.start} to ${time.end}`}
+                                        {`${formatTime(
+                                            time.start_time
+                                        )} - ${formatTime(time.end_time)}`}
                                     </SelectItem>
                                 );
                             })}
