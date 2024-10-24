@@ -1,8 +1,10 @@
 import { Suspense } from "react";
+import { getAllStaff } from "./service";
+import { PAGE_SIZE } from "../_lib/constants";
 import PageHandler from "@/components/shared/page-handler";
 import StaffCreateButton from "./_components/staff-create-button";
 import StaffTableRow from "./_components/staff-table-row";
-
+import StaffError from "./_components/staff-error";
 import {
     Table,
     TableBody,
@@ -11,8 +13,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { getAllStaff } from "./service";
-import { PAGE_SIZE } from "../_lib/constants";
 
 const Staff = async ({
     searchParams,
@@ -24,7 +24,8 @@ const Staff = async ({
     const { data, error, count } = await getAllStaff(page, PAGE_SIZE.STAFF);
 
     if (error) {
-        return <h2>Error par</h2>;
+        console.log("Error in Staff Table: ", error);
+        return <StaffError />;
     }
 
     const totalPages = Math.ceil(count! / PAGE_SIZE.STAFF);
