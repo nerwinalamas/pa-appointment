@@ -47,7 +47,7 @@ const DeleteAppointment = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Delete Appointment</DialogTitle>
                     <DialogDescription>
