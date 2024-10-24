@@ -28,12 +28,14 @@ const ReservationContent = () => {
         setDepositScreenshotLink,
     } = useReservation();
 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<ErrorMessage>({});
     const router = useRouter();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        setLoading(true);
         const formData = {
             name,
             contactNumber,
@@ -85,6 +87,8 @@ const ReservationContent = () => {
             }
         } catch (error) {
             console.log("Error in payment: ", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -190,11 +194,14 @@ const ReservationContent = () => {
                     </p>
                 )}
                 <div className="flex flex-col space-y-2">
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" disabled={loading}>
+                        {loading ? "Loading..." : "Submit"}
+                    </Button>
                     <Button
                         type="button"
                         variant="outline"
                         onClick={handleCancel}
+                        disabled={loading}
                     >
                         Cancel
                     </Button>

@@ -51,9 +51,9 @@ export const getAllHolidays = async () => {
 export const getAllTimeSlots = async () => {
     const supabase = createClient();
 
-    const { data, error } = await supabase
+    const { data, error, count } = await supabase
         .from("time_slots")
-        .select("*")
+        .select("*", { count: "exact" })
         .order("start_time");
 
     if (error) {
@@ -61,7 +61,7 @@ export const getAllTimeSlots = async () => {
         return { success: false, error: error.message };
     }
 
-    return { success: true, data };
+    return { success: true, data, count };
 };
 
 export const getAllMonths = async () => {
