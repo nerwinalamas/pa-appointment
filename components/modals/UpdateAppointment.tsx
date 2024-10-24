@@ -1,12 +1,20 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { updateAppointment } from "@/app/(dashboard)/appointments/action";
 import { appointmentSchema } from "@/app/(dashboard)/appointments/_lib/schema";
+import {
+    AvailableTimeSlots,
+    ErrorMessage,
+    TimeSlot,
+} from "@/app/(dashboard)/appointments/_types";
+import { getAllTimeSlots } from "@/app/(dashboard)/appointments/serviceClient";
+import { formatTime } from "@/app/(home)/time-slots/_lib";
 import { useAppointmentModal } from "@/hooks/useAppointmentModal";
 import { cn } from "@/lib/utils";
 
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -30,13 +38,14 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format, isBefore, parseISO } from "date-fns";
 import toast from "react-hot-toast";
-import { ErrorMessage, TimeSlot } from "@/app/(dashboard)/appointments/_types";
-import { TIME_SLOTS } from "@/app/(dashboard)/appointments/_lib/constants";
 
 const UpdateAppointment = () => {
     const { isOpen, onClose, type, data } = useAppointmentModal();
     const isModalOpen = isOpen && type === "updateAppointment";
 
+    const [availableTimeSlots, setAvailableTimeSlots] = useState<
+        AvailableTimeSlots[]
+    >([]);
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [timeSlots, setTimeSlots] = useState<TimeSlot | null>(null);
     const [name, setName] = useState("");
@@ -54,6 +63,39 @@ const UpdateAppointment = () => {
             setContactNumber(data?.contact_number);
         }
     }, [isModalOpen, data]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const getTimeSlots = async () => {
+            const response = await getAllTimeSlots();
+
+            if (response.error) {
+                console.log("Error fetching time slots: ", response.error);
+            } else {
+                if (Array.isArray(response.data)) {
+                    if (isMounted) {
+                        setAvailableTimeSlots(response.data);
+                    }
+                } else {
+                    if (isMounted) {
+                        console.log(
+                            "No time slots found or data is not an array."
+                        );
+                        setAvailableTimeSlots([]);
+                    }
+                }
+            }
+        };
+
+        if (isModalOpen) {
+            getTimeSlots();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [isModalOpen]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -77,9 +119,15 @@ const UpdateAppointment = () => {
 
         if (!data) return;
 
+        const updateTimeSlotsData = {
+            id: timeSlots?.id,
+            start_time: timeSlots?.start_time,
+            end_time: timeSlots?.end_time,
+        };
+
         const formData = {
             date,
-            timeSlots,
+            timeSlots: updateTimeSlotsData,
             name,
             contactNumber,
         };
@@ -106,10 +154,10 @@ const UpdateAppointment = () => {
             if (date) {
                 formData.append("date", format(date, "MMMM dd, yyyy"));
             }
-            if (timeSlots) {
-                const timeSlotsArray = Array.isArray(timeSlots)
-                    ? timeSlots
-                    : [timeSlots];
+            if (updateTimeSlotsData) {
+                const timeSlotsArray = Array.isArray(updateTimeSlotsData)
+                    ? updateTimeSlotsData
+                    : [updateTimeSlotsData];
                 formData.append("timeSlots", JSON.stringify(timeSlotsArray));
             }
             formData.append("name", name);
@@ -138,9 +186,12 @@ const UpdateAppointment = () => {
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleDialogChange}>
-            <DialogContent aria-describedby={undefined}>
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Update Appointment</DialogTitle>
+                    <DialogDescription>
+                        Modify your existing appointment details
+                    </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                     <Label htmlFor="date">Date</Label>
@@ -208,14 +259,20 @@ const UpdateAppointment = () => {
                             <SelectValue placeholder="Select a time slot" />
                         </SelectTrigger>
                         <SelectContent>
-                            {TIME_SLOTS.map((time, index) => {
-                                const timeSlotObject = JSON.stringify(time);
+                            {availableTimeSlots.map((time) => {
+                                const data = {
+                                    id: time.id,
+                                    start_time: time.start_time,
+                                    end_time: time.end_time,
+                                };
                                 return (
                                     <SelectItem
-                                        key={index}
-                                        value={timeSlotObject}
+                                        key={time.id}
+                                        value={JSON.stringify(data)}
                                     >
-                                        {`${time.start} to ${time.end}`}
+                                        {`${formatTime(
+                                            time.start_time
+                                        )} - ${formatTime(time.end_time)}`}
                                     </SelectItem>
                                 );
                             })}
