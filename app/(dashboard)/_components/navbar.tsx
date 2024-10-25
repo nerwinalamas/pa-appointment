@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logout from "@/app/(auth)/logout/page";
 import { SIDEBAR_ITEMS } from "../_lib/constants";
 import ToggleThemeButton from "@/components/shared/toggle-theme-button";
@@ -17,6 +18,7 @@ import { Menu } from "lucide-react";
 
 const Navbar = () => {
     const [openSheet, setOpenSheet] = useState(false);
+    const pathname = usePathname();
 
     return (
         <nav className="p-4 flex items-center justify-between bg-slate-100 dark:bg-slate-950">
@@ -28,7 +30,7 @@ const Navbar = () => {
                     <SheetTrigger>
                         <Menu />
                     </SheetTrigger>
-                    <SheetContent aria-describedby={undefined}>
+                    <SheetContent side="left" aria-describedby={undefined}>
                         <SheetHeader>
                             <SheetTitle>Logo</SheetTitle>
                         </SheetHeader>
@@ -37,7 +39,11 @@ const Navbar = () => {
                                 <Link
                                     href={item.url}
                                     key={item.id}
-                                    className="w-full p-2"
+                                    className={`w-full p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 ${
+                                        pathname === `/${item.name.toLowerCase()}`
+                                            ? "bg-slate-200 dark:bg-slate-700"
+                                            : ""
+                                    }`}
                                     onClick={() => setOpenSheet(false)}
                                 >
                                     {item.name}
