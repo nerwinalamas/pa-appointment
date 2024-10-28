@@ -11,8 +11,8 @@ const Payment = async () => {
     }
 
     return (
-        <div className="flex flex-col gap-2 pt-5 pb-20 lg:pb-12 lg:gap-4 lg:mx-auto xl:m-4 xl:p-4 bg-slate-100 dark:bg-slate-950">
-            <h1 className="text-2xl font-bold">Payment Settings</h1>
+        <div className="min-h-screen xl:min-h-max flex flex-col gap-2 pt-5 pb-20 lg:pb-12 lg:gap-4 lg:mx-auto xl:m-4 xl:p-4 bg-slate-100 dark:bg-slate-950">
+            <h1 className="px-4 py-2 text-2xl font-bold">Payment Settings</h1>
             <PaymentDetails data={data as PaymentDetailsProps[]} />
         </div>
     );

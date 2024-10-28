@@ -29,15 +29,15 @@ const StaffTableRow = ({
 
     return (
         <TableRow className="grid xl:grid-cols-7">
-            <TableCell>
+            <TableCell className="capitalize">
                 {first_name && last_name ? `${first_name} ${last_name}` : "-"}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="xl:text-center">
                 {contact_number || "-"}
             </TableCell>
-            <TableCell className="text-center">{email}</TableCell>
-            <TableCell className="text-center">{role}</TableCell>
-            <TableCell className="text-center">{status}</TableCell>
+            <TableCell className="xl:text-center">{email}</TableCell>
+            <TableCell className="capitalize xl:text-center">{role}</TableCell>
+            <TableCell className="capitalize xl:text-center">{status}</TableCell>
             <TableCell className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-center xl:col-span-2">
                 <Button
                     variant="secondary"
